@@ -1,18 +1,16 @@
-# CHATGPT REVERSI
+# WIP: CHATGPT COOKING ASSISTANT
 
 <div><img src="./docs/images/main.png" /></div>
 
-<div align="center">This repository is for a game where you can play the game of Reversi with ChatGPT. It was created based on the principles of clean architecture.</div>
-
-- [CHATGPT REVERSI](#chatgpt-reversi)
+- [WIP: CHATGPT COOKING ASSISTANT](#wip-chatgpt-cooking-assistant)
 - [Installation](#installation)
 - [Usage](#usage)
 
 # Installation
 
 ```bash
-$ git clone https://github.com/maaaashi/ReversiWithChatGPT
-$ cd ReversiWithChatGPT/
+$ git clone https://github.com/maaaashi/chatgpt-cooking-assistant
+$ cd chatgpt-cooking-assistant
 ```
 
 # Usage
