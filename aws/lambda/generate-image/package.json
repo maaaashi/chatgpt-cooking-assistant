@@ -1,5 +1,5 @@
 {
-  "name": "generate-recipe",
+  "name": "generate-prompt",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,8 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/uuid": "^9.0.3",
+    "@vercel/blob": "^0.11.0",
     "aws-lambda": "^1.0.7",
-    "openai": "^3.3.0"
+    "openai": "^3.3.0",
+    "stability-client": "^1.9.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.119"

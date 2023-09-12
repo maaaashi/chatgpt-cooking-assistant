@@ -36,15 +36,26 @@ export const handler: Handler = async (req) => {
 
   try {
     const response = await postGPT(message)
-    const content = response.data.choices[0].message?.content!
+    const recipe = response.data.choices[0].message?.content!
+
+    const res = await fetch(process.env.GENERATE_IMAGE_URL!, {
+      method: 'POST',
+      body: JSON.stringify({
+        message: recipe,
+      }),
+    })
+
+    const { url } = await res.json()
 
     return JSON.stringify({
-      content,
+      content: recipe,
+      imageUrl: url,
     })
   } catch (e) {
     console.log(e)
     return JSON.stringify({
       content: 'ERROR',
+      imageUrl: 'ERROR',
     })
   }
 }
