@@ -13,11 +13,11 @@ export class MaaaashiCookingAssistant extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props)
 
-    const generatePromptLambda = new Function(
+    const generateRecipeLambda = new Function(
       this,
-      'CookingAssistantGeneratePrompt',
+      'CookingAssistantGenerateRecipe',
       {
-        functionName: 'CookingAssistantGeneratePrompt',
+        functionName: 'CookingAssistantGenerateRecipe',
         runtime: Runtime.NODEJS_18_X,
         code: Code.fromAsset(
           path.join(__dirname, '../lambda/generate-prompt/')
@@ -30,7 +30,7 @@ export class MaaaashiCookingAssistant extends Stack {
       }
     )
 
-    const generatePromptFunctionURL = generatePromptLambda.addFunctionUrl({
+    const generateRecipeFunctionURL = generateRecipeLambda.addFunctionUrl({
       authType: FunctionUrlAuthType.NONE,
       cors: {
         allowedMethods: [HttpMethod.POST],
@@ -38,8 +38,8 @@ export class MaaaashiCookingAssistant extends Stack {
       },
     })
 
-    new CfnOutput(this, 'GeneratePromptURL', {
-      value: generatePromptFunctionURL.url,
+    new CfnOutput(this, 'GenerateRecipeURL', {
+      value: generateRecipeFunctionURL.url,
     })
   }
 }

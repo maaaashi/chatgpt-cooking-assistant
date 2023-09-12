@@ -20,7 +20,7 @@ export default function Home() {
     return `<li>${text}</li>`
   }
 
-  const generatePrompt = async () => {
+  const generateRecipe = async () => {
     const useList = ingredientList.filter((i) => i.use)
     const notUseList = ingredientList.filter((i) => !i.use)
     const confirm = await Swal.fire({
@@ -54,7 +54,7 @@ export default function Home() {
     setRecipe('')
     setLoading(true)
 
-    const url = process.env.NEXT_PUBLIC_GENERATE_PROMPT_URL!
+    const url = process.env.NEXT_PUBLIC_GENERATE_RECIPE_URL!
 
     const response = await fetch(url, {
       method: 'POST',
@@ -93,18 +93,18 @@ export default function Home() {
           <IngredientList title='使いたい食材' use={true} />
           <IngredientList title='使いたくない食材' use={false} />
         </div>
-
-        <ReactMarkdown>{recipe}</ReactMarkdown>
-      </main>
-      <footer className='p-3'>
         <button
           disabled={loading}
-          onClick={generatePrompt}
+          onClick={generateRecipe}
           className='btn btn-primary w-full'
         >
           レシピ生成！
         </button>
-      </footer>
+
+        <div className='prose mx-auto'>
+          <ReactMarkdown>{recipe}</ReactMarkdown>
+        </div>
+      </main>
     </div>
   )
 }
