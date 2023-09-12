@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { useRecoilState } from 'recoil'
 
 export const Setting = () => {
-  const categories = ['なし', '和', '洋', '中'] as const
+  const categories = ['なし', '和食', '洋食', '中華'] as const
   const [category, setCategory] = useRecoilState(CategoryAtom)
 
   return (

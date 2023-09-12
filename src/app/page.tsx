@@ -43,12 +43,37 @@ export default function Home() {
             ? notUseList.map((l) => wrapListTag(l.name))
             : wrapListTag('なし')
         }
-      </div>
-      `,
+      </div>`,
       showCancelButton: true,
     })
 
     if (!confirm.isConfirmed) return
+
+    const url = process.env.NEXT_PUBLIC_GENERATE_PROMPT_URL!
+
+    const response = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify({
+        message: `
+        ### カテゴリ
+        ${category}
+
+        ### 使いたい食材
+        ${useList.map(
+          (l) => `
+        - ${l.name}`
+        )}
+
+        ### 使いたくない食材
+        ${notUseList.map(
+          (l) => `
+        - ${l.name}`
+        )}
+        `,
+      }),
+    })
+
+    console.log(response)
   }
 
   return (
