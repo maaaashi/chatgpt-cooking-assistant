@@ -3,17 +3,18 @@
 import { Header } from '@/components/Header'
 import { Setting } from '@/components/Category'
 import { IngredientList } from '@/components/IngredientList'
-import { Ingredient } from '@/domains/ingredient'
-import { useEffect, useState } from 'react'
-import { RecoilRoot, useRecoilState, useRecoilValue } from 'recoil'
+import { useState } from 'react'
+import { useRecoilValue } from 'recoil'
 import { IngredientsAtom } from '@/atoms/Ingredients'
 import { CategoryAtom } from '@/atoms/Category'
 import Swal from 'sweetalert2'
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
 
 export default function Home() {
   const ingredientList = useRecoilValue(IngredientsAtom)
   const category = useRecoilValue(CategoryAtom)
   const [recipe, setRecipe] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const wrapListTag = (text: string) => {
     return `<li>${text}</li>`
@@ -50,6 +51,9 @@ export default function Home() {
 
     if (!confirm.isConfirmed) return
 
+    setRecipe('')
+    setLoading(true)
+
     const url = process.env.NEXT_PUBLIC_GENERATE_PROMPT_URL!
 
     const response = await fetch(url, {
@@ -77,6 +81,7 @@ export default function Home() {
     const { content } = await response.json()
 
     setRecipe(content)
+    setLoading(false)
   }
 
   return (
@@ -89,10 +94,14 @@ export default function Home() {
           <IngredientList title='使いたくない食材' use={false} />
         </div>
 
-        {recipe}
+        <ReactMarkdown>{recipe}</ReactMarkdown>
       </main>
       <footer className='p-3'>
-        <button onClick={generatePrompt} className='btn btn-primary w-full'>
+        <button
+          disabled={loading}
+          onClick={generatePrompt}
+          className='btn btn-primary w-full'
+        >
           レシピ生成！
         </button>
       </footer>
