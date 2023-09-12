@@ -16,9 +16,10 @@ export const Setting = () => {
           const value = e.target.value as (typeof categories)[number]
           setCategory(value)
         }}
+        value={category}
       >
         {categories.map((c, i) => (
-          <option key={i} selected={category === c} value={c}>
+          <option key={i} value={c}>
             {c}
           </option>
         ))}

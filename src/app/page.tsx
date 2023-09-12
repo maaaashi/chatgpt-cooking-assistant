@@ -13,6 +13,7 @@ import Swal from 'sweetalert2'
 export default function Home() {
   const ingredientList = useRecoilValue(IngredientsAtom)
   const category = useRecoilValue(CategoryAtom)
+  const [recipe, setRecipe] = useState('')
 
   const wrapListTag = (text: string) => {
     return `<li>${text}</li>`
@@ -73,16 +74,22 @@ export default function Home() {
       }),
     })
 
-    console.log(response)
+    const { content } = await response.json()
+
+    setRecipe(content)
   }
 
   return (
     <div className='h-screen flex flex-col'>
       <Header />
-      <main className='flex-1 flex gap-5 justify-center'>
-        <Setting />
-        <IngredientList title='使いたい食材' use={true} />
-        <IngredientList title='使いたくない食材' use={false} />
+      <main className='flex-1'>
+        <div className='flex gap-5 justify-center'>
+          <Setting />
+          <IngredientList title='使いたい食材' use={true} />
+          <IngredientList title='使いたくない食材' use={false} />
+        </div>
+
+        {recipe}
       </main>
       <footer className='p-3'>
         <button onClick={generatePrompt} className='btn btn-primary w-full'>

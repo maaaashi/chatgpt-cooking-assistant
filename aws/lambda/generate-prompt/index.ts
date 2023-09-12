@@ -9,7 +9,7 @@ const postGPT = async (message: string) => {
   const openai = new OpenAIApi(configuration)
   const model = 'gpt-4'
 
-  const systemContent = ``
+  const systemContent = `ユーザーが料理のレシピを求めてきます。markdown形式で回答してください。`
 
   return await openai.createChatCompletion({
     model,
@@ -21,7 +21,7 @@ const postGPT = async (message: string) => {
       },
       {
         role: 'user',
-        content: ``,
+        content: message,
       },
     ],
   })
