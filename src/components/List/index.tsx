@@ -32,33 +32,27 @@ export const List = () => {
   }
 
   return (
-    <>
+    <div className='flex flex-wrap p-5'>
       {recipes.map((r, i) => {
         return (
-          <div className='card lg:card-side bg-base-100 shadow-xl' key={i}>
-            <figure>
+          <button
+            className='card bg-base-100 shadow-xl w-1/3 group hover:bg-base-300 hover:shadow-lg'
+            key={i}
+            onClick={() => {
+              clickHandler(r)
+            }}
+          >
+            <figure className='bg-base-300 relative'>
+              <div className='absolute w-full h-full bg-transparent group-hover:bg-transparent-base'></div>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={r.imageUrl} alt={r.title} />
             </figure>
             <div className='card-body'>
               <h2 className='card-title'>{r.title}</h2>
-              <div className='prose prose-sm mx-auto'>
-                <ReactMarkdown>{r.recipe}</ReactMarkdown>
-              </div>
-              <div className='card-actions justify-end'>
-                <button
-                  className='btn btn-primary'
-                  onClick={() => {
-                    clickHandler(r)
-                  }}
-                >
-                  表示
-                </button>
-              </div>
             </div>
-          </div>
+          </button>
         )
       })}
-    </>
+    </div>
   )
 }

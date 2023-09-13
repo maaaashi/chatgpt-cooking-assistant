@@ -1,16 +1,19 @@
 import { Setting } from '@/components/Category'
 import { IngredientList } from '@/components/IngredientList'
 import { useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { IngredientsAtom } from '@/atoms/Ingredients'
 import { CategoryAtom } from '@/atoms/Category'
 import Swal from 'sweetalert2'
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
+import { SelectRecipeAtom } from '@/atoms/SelectRecipe'
+import { ModeAtom } from '@/atoms/Mode'
 
 export const Generate = () => {
   const ingredientList = useRecoilValue(IngredientsAtom)
   const category = useRecoilValue(CategoryAtom)
-  const [recipe, setRecipe] = useState('')
+  const [other, setOther] = useState('')
+  const setRecipe = useSetRecoilState(SelectRecipeAtom)
+  const setMode = useSetRecoilState(ModeAtom)
   const [loading, setLoading] = useState(false)
 
   const wrapListTag = (text: string) => {
@@ -30,25 +33,29 @@ export const Generate = () => {
       <div>
         使いたい食材
         ${
-          useList.length
-            ? useList.map((l) => wrapListTag(l.name))
+          useList.length > 0
+            ? useList.map((l) => wrapListTag(l.name)).join('')
             : wrapListTag('なし')
         }
       </div>
       <div>
         使いたくない食材
         ${
-          notUseList.length
-            ? notUseList.map((l) => wrapListTag(l.name))
+          notUseList.length > 0
+            ? notUseList.map((l) => wrapListTag(l.name)).join('')
             : wrapListTag('なし')
         }
+      </div>
+      <div>
+        その他<br>
+        ${other}
       </div>`,
       showCancelButton: true,
     })
 
     if (!confirm.isConfirmed) return
 
-    setRecipe('')
+    setRecipe(undefined)
     setLoading(true)
 
     const url = process.env.NEXT_PUBLIC_GENERATE_RECIPE_URL!
@@ -71,6 +78,9 @@ export const Generate = () => {
           (l) => `
         - ${l.name}`
         )}
+
+        ### その他
+        ${other}
         `,
       }),
     })
@@ -88,15 +98,31 @@ export const Generate = () => {
     })
 
     setRecipe(recipe)
+    setMode('view')
     setLoading(false)
   }
 
   return (
-    <>
-      <div className='flex gap-5 justify-center'>
-        <Setting />
-        <IngredientList title='使いたい食材' use={true} />
-        <IngredientList title='使いたくない食材' use={false} />
+    <div className='flex flex-col' style={{ height: 'calc(100vh - 140px)' }}>
+      <div className='flex flex-col flex-1'>
+        <div className='flex gap-5 justify-center'>
+          <Setting />
+          <IngredientList title='使いたい食材' use={true} />
+          <IngredientList title='使いたくない食材' use={false} />
+        </div>
+
+        <div className='flex flex-col w-4/5 mx-auto'>
+          <label htmlFor='other'>その他</label>
+          <textarea
+            id='other'
+            className='textarea textarea-bordered resize-none'
+            placeholder='レンジで簡単にできる'
+            value={other}
+            onChange={(e) => {
+              setOther(e.target.value)
+            }}
+          ></textarea>
+        </div>
       </div>
       <button
         disabled={loading}
@@ -105,10 +131,6 @@ export const Generate = () => {
       >
         レシピ生成！
       </button>
-
-      <div className='prose mx-auto'>
-        <ReactMarkdown>{recipe}</ReactMarkdown>
-      </div>
-    </>
+    </div>
   )
 }

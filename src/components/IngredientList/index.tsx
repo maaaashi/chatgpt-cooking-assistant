@@ -39,7 +39,10 @@ export const IngredientList: FC<Props> = ({ title, use }) => {
         <button className='btn'>追加</button>
       </form>
 
-      <ul className='space-y-1 text-gray-500'>
+      <ul
+        className='space-y-1 text-gray-500 overflow-y-auto'
+        style={{ height: 'calc(100vh - 400px)' }}
+      >
         {ingredientList
           .filter((i) => i.use === use)
           .map((ingredient, i) => (

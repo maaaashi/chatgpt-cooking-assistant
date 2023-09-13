@@ -13,6 +13,9 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      colors: {
+        'transparent-base': 'rgba(228,230,230,0.3)',
+      },
     },
   },
   plugins: [require('daisyui'), require('@tailwindcss/typography')],
