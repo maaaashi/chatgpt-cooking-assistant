@@ -22,10 +22,13 @@ jobs:
         run: cp -R prisma ./aws/lambda/generate-image
       - name: Generate prisma engine
         working-directory: ./aws/lambda/generate-image
-        run: npx prisma generate
+        run: npx prisma pull && npx prisma generate
         env:
           POSTGRES_PRISMA_URL: ${{ secrets.AWS_ACCESS_KEY_ID }}
           POSTGRES_URL_NON_POOLING: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      - name: Debug
+        working-directory: ./aws/lambda/generate-image
+        run: ls
       - name: CDK Deploy
         working-directory: aws
         run: npm run cdk deploy
