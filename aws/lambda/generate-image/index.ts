@@ -4,7 +4,34 @@ import { generateAsync } from 'stability-client'
 import { put } from '@vercel/blob'
 import { v4 as uuidv4 } from 'uuid'
 
-const postGPT = async (message: string) => {
+const generateTitle = async (message: string) => {
+  const apiKey = process.env.CHATGPT_APIKEY
+  const configuration = new Configuration({
+    apiKey,
+  })
+  const openai = new OpenAIApi(configuration)
+  const model = 'gpt-4'
+
+  const systemContent =
+    'Answer the title of the dish in the recipe entered by the user in Japanese.'
+
+  return await openai.createChatCompletion({
+    model,
+    temperature: 0.5,
+    messages: [
+      {
+        role: 'system',
+        content: systemContent,
+      },
+      {
+        role: 'user',
+        content: message,
+      },
+    ],
+  })
+}
+
+const generatePrompt = async (message: string) => {
   const apiKey = process.env.CHATGPT_APIKEY
   const configuration = new Configuration({
     apiKey,
@@ -84,18 +111,23 @@ export const handler: Handler = async (req) => {
   const { message } = JSON.parse(req.body) as Input
 
   try {
-    const response = await postGPT(message)
+    const response = await generatePrompt(message)
     const content = response.data.choices[0].message?.content!
+    const res = await generateTitle(message)
+    const title = res.data.choices[0].message?.content!
     const url = await generateImage(content)
 
     return JSON.stringify({
       url,
       prompt: content,
+      title,
     })
   } catch (e) {
     console.log(e)
     return JSON.stringify({
       url: 'error',
+      prompt: 'error',
+      title: 'error',
     })
   }
 }

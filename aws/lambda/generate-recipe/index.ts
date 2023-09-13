@@ -45,12 +45,13 @@ export const handler: Handler = async (req) => {
       }),
     })
 
-    const { url, prompt } = await res.json()
+    const { url, prompt, title } = await res.json()
 
     return JSON.stringify({
       recipe,
       imageUrl: url,
       prompt,
+      title,
     })
   } catch (e) {
     console.log(e)

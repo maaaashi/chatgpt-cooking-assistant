@@ -75,7 +75,7 @@ export const Generate = () => {
       }),
     })
 
-    const { recipe, imageUrl, prompt } = await response.json()
+    const { recipe, imageUrl, prompt, title } = await response.json()
 
     await fetch('/api/putRecipe', {
       method: 'POST',
@@ -83,6 +83,7 @@ export const Generate = () => {
         recipe,
         imageUrl,
         prompt,
+        title,
       }),
     })
 

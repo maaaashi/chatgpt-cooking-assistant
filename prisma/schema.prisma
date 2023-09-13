@@ -10,6 +10,7 @@ datasource db {
 
 model Recipe {
   id       Int    @id @default(autoincrement())
+  title    String
   recipe   String
   prompt   String
   imageUrl String

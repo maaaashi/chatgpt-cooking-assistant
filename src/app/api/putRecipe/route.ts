@@ -4,7 +4,8 @@ import { PrismaClient } from '@prisma/client'
 const putVercelDB = async (
   recipe: string,
   imageUrl: string,
-  prompt: string
+  prompt: string,
+  title: string
 ) => {
   try {
     const prisma = new PrismaClient()
@@ -13,6 +14,7 @@ const putVercelDB = async (
         recipe,
         imageUrl,
         prompt,
+        title,
       },
     })
   } catch (error) {
@@ -21,9 +23,9 @@ const putVercelDB = async (
 }
 
 export async function POST(event: NextRequest): Promise<NextResponse> {
-  const { recipe, imageUrl, prompt } = await event.json()
+  const { recipe, imageUrl, prompt, title } = await event.json()
 
-  await putVercelDB(recipe, imageUrl, prompt)
+  await putVercelDB(recipe, imageUrl, prompt, title)
 
   return NextResponse.json({})
 }
