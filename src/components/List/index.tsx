@@ -10,7 +10,7 @@ export const List = () => {
 
     console.log(json)
     setRecipes(() => {
-      return json.map((d) => {
+      return json.map((d: any) => {
         return new Recipe(d.id, d.imageUrl, d.title, d.prompt)
       })
     })
