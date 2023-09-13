@@ -1,6 +1,5 @@
 export class Recipe {
   constructor(
-    private _id: number,
     private _title: string,
     private _recipe: string,
     private _imageUrl: string,

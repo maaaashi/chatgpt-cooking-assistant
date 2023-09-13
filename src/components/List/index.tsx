@@ -17,7 +17,7 @@ export const List = () => {
     console.log(json)
     setRecipes(() => {
       return json.map((d: any) => {
-        return new Recipe(d.id, d.title, d.recipe, d.imageUrl, d.prompt)
+        return new Recipe(d.title, d.recipe, d.imageUrl, d.prompt)
       })
     })
   }

@@ -7,6 +7,7 @@ import { CategoryAtom } from '@/atoms/Category'
 import Swal from 'sweetalert2'
 import { SelectRecipeAtom } from '@/atoms/SelectRecipe'
 import { ModeAtom } from '@/atoms/Mode'
+import { Recipe } from '@/domains/recipe'
 
 export const Generate = () => {
   const ingredientList = useRecoilValue(IngredientsAtom)
@@ -97,7 +98,9 @@ export const Generate = () => {
       }),
     })
 
-    setRecipe(recipe)
+    const addRecipe = new Recipe(title, recipe, imageUrl, prompt)
+
+    setRecipe(addRecipe)
     setMode('view')
     setLoading(false)
   }
