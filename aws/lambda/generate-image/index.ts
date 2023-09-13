@@ -3,6 +3,7 @@ import { Configuration, OpenAIApi } from 'openai'
 import { generateAsync } from 'stability-client'
 import { put } from '@vercel/blob'
 import { v4 as uuidv4 } from 'uuid'
+import { PrismaClient } from '@prisma/client'
 
 const postGPT = async (message: string) => {
   const apiKey = process.env.CHATGPT_APIKEY
@@ -76,6 +77,25 @@ const generateImage = async (prompt: string) => {
   }
 }
 
+const putVercelDB = async (
+  recipe: string,
+  imageUrl: string,
+  prompt: string
+) => {
+  try {
+    const prisma = new PrismaClient()
+    await prisma.recipe.create({
+      data: {
+        recipe,
+        imageUrl,
+        prompt,
+      },
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 type Input = {
   message: string
 }
@@ -86,8 +106,9 @@ export const handler: Handler = async (req) => {
   try {
     const response = await postGPT(message)
     const content = response.data.choices[0].message?.content!
-
     const url = await generateImage(content)
+
+    await putVercelDB(message, url, content)
 
     return JSON.stringify({
       url,
