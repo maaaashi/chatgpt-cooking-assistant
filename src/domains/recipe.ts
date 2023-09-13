@@ -1,8 +1,9 @@
 export class Recipe {
   constructor(
     private _id: number,
-    private _imageUrl: string,
     private _title: string,
+    private _recipe: string,
+    private _imageUrl: string,
     private _prompt: string
   ) {}
 
@@ -12,5 +13,13 @@ export class Recipe {
 
   get title() {
     return this._title
+  }
+
+  get recipe() {
+    return this._recipe
+  }
+
+  get prompt() {
+    return this._prompt
   }
 }

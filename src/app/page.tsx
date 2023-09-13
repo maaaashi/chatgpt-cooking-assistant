@@ -1,12 +1,14 @@
 'use client'
 
 import { Header } from '@/components/Header'
-import { useState } from 'react'
 import { Generate } from '@/components/Generate'
 import { List } from '@/components/List'
+import { useRecoilState } from 'recoil'
+import { ModeAtom } from '@/atoms/Mode'
+import { View } from '@/components/View'
 
 export default function Home() {
-  const [mode, setMode] = useState<'generate' | 'list'>('generate')
+  const [mode, setMode] = useRecoilState(ModeAtom)
 
   const mainView = () => {
     switch (mode) {
@@ -14,6 +16,8 @@ export default function Home() {
         return <Generate />
       case 'list':
         return <List />
+      case 'view':
+        return <View />
     }
   }
 
