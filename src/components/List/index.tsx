@@ -1,14 +1,31 @@
-import React from 'react'
+import { Recipe } from '@/domains/recipe'
+import React, { useEffect, useState } from 'react'
 
 export const List = () => {
+  const [recipes, setRecipes] = useState<Recipe[]>([])
+
+  const listRecipe = async () => {
+    const response = await fetch('/api/listRecipe')
+    const json = await response.json()
+
+    console.log(json)
+    setRecipes(() => {
+      return json.map((d) => {
+        return new Recipe(d.id, d.imageUrl, d.title, d.prompt)
+      })
+    })
+  }
+
+  useEffect(() => {
+    listRecipe()
+  }, [])
+
   return (
     <>
-      {[0].map((l, i) => {
+      {recipes.map((r, i) => {
         return (
-          <img
-            src='https://unqinjwlxwla3i0v.public.blob.vercel-storage.com/57afb63f-c1ff-4c57-a10b-586c171f995a-9wRv7Bh22tO4ztgMsrNjnatIAdKfiO'
-            key={i}
-          />
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={r.imageUrl} alt={r.title} key={i} />
         )
       })}
     </>
