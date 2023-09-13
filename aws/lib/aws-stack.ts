@@ -25,6 +25,8 @@ export class MaaaashiCookingAssistant extends Stack {
           CHATGPT_APIKEY: process.env.CHATGPT_APIKEY!,
           DREAM_STUDIO_APIKEY: process.env.DREAM_STUDIO_APIKEY!,
           BLOB_READ_WRITE_TOKEN: process.env.BLOB_READ_WRITE_TOKEN!,
+          POSTGRES_PRISMA_URL: process.env.POSTGRES_PRISMA_URL!,
+          POSTGRES_URL_NON_POOLING: process.env.POSTGRES_URL_NON_POOLING!,
         },
         timeout: Duration.minutes(15),
       }
