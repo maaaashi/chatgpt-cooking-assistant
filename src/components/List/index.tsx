@@ -1,6 +1,7 @@
 import { ModeAtom } from '@/atoms/Mode'
 import { SelectRecipeAtom } from '@/atoms/SelectRecipe'
 import { Recipe } from '@/domains/recipe'
+import { PrismaClient } from '@prisma/client'
 import React, { useEffect, useState } from 'react'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
 import { useRecoilState, useSetRecoilState } from 'recoil'
@@ -22,8 +23,16 @@ export const List = () => {
     })
   }
 
+  const list = async () => {
+    const prisma = new PrismaClient()
+
+    const recipes = await prisma.recipe.findMany()
+    console.log(recipes)
+  }
+
   useEffect(() => {
     listRecipe()
+    list()
   }, [])
 
   const clickHandler = (recipe: Recipe) => {
@@ -32,11 +41,11 @@ export const List = () => {
   }
 
   return (
-    <div className='flex flex-wrap p-5'>
+    <div className='flex flex-wrap p-5 gap-5'>
       {recipes.map((r, i) => {
         return (
           <button
-            className='card bg-base-100 shadow-xl w-1/3 group hover:bg-base-300 hover:shadow-lg'
+            className='card bg-base-100 shadow-xl max-w-sm w-1/3 group hover:bg-base-300 hover:shadow-lg'
             key={i}
             onClick={() => {
               clickHandler(r)
