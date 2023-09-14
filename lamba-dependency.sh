@@ -3,5 +3,5 @@ for dir in aws/lambda/*; do
 done
 
 for dir in aws/layer/*; do
-  (cd "$dir/nodejs" && npm ci)
+  (cd "$dir/nodejs" && npm ci && tsc ./*.ts)
 done
