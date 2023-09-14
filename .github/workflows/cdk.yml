@@ -16,7 +16,17 @@ jobs:
       - name: Setup dependencies
         working-directory: aws
         run: npm ci
-      - name: Setup lambda
+      - name: Copy prisma
+        run: cp -R ./prisma ./aws/layer/prisma/nodejs/
+        env:
+          POSTGRES_DATABASE: ${{ secrets.POSTGRES_DATABASE }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_PRISMA_URL: ${{ secrets.POSTGRES_PRISMA_URL }}
+          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+          POSTGRES_URL_NON_POOLING: ${{ secrets.POSTGRES_URL_NON_POOLING }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      - name: Setup lambda & layer
         run: bash ./lamba-dependency.sh
       - name: CDK Deploy
         working-directory: aws
@@ -28,3 +38,10 @@ jobs:
           CHATGPT_APIKEY: ${{ secrets.CHATGPT_APIKEY }}
           DREAM_STUDIO_APIKEY: ${{ secrets.DREAM_STUDIO_APIKEY }}
           BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
+          POSTGRES_DATABASE: ${{ secrets.POSTGRES_DATABASE }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_PRISMA_URL: ${{ secrets.POSTGRES_PRISMA_URL }}
+          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+          POSTGRES_URL_NON_POOLING: ${{ secrets.POSTGRES_URL_NON_POOLING }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}

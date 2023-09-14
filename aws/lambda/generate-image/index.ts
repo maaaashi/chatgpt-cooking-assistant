@@ -3,6 +3,7 @@ import { Configuration, OpenAIApi } from 'openai'
 import { generateAsync } from 'stability-client'
 import { put } from '@vercel/blob'
 import { v4 as uuidv4 } from 'uuid'
+import { PrismaClient } from '@prisma/client'
 
 const generateTitle = async (message: string) => {
   const apiKey = process.env.CHATGPT_APIKEY
@@ -107,6 +108,23 @@ type Input = {
   message: string
 }
 
+const putDB = async (
+  title: string,
+  recipe: string,
+  prompt: string,
+  imageUrl: string
+) => {
+  const prisma = new PrismaClient()
+  prisma.recipe.create({
+    data: {
+      title,
+      recipe,
+      prompt,
+      imageUrl,
+    },
+  })
+}
+
 export const handler: Handler = async (req) => {
   const { message } = JSON.parse(req.body) as Input
 
@@ -116,6 +134,13 @@ export const handler: Handler = async (req) => {
     const res = await generateTitle(message)
     const title = res.data.choices[0].message?.content!
     const url = await generateImage(content)
+
+    try {
+      await putDB(title, message, content, url)
+      console.log('成功しました')
+    } catch (error) {
+      console.log(error)
+    }
 
     return JSON.stringify({
       url,
