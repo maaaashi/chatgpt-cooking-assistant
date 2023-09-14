@@ -3,7 +3,7 @@ import { Configuration, OpenAIApi } from 'openai'
 import { generateAsync } from 'stability-client'
 import { put } from '@vercel/blob'
 import { v4 as uuidv4 } from 'uuid'
-import { putDB } from '/opt/client'
+import { putDB } from '/opt/nodejs/client'
 
 const generateTitle = async (message: string) => {
   const apiKey = process.env.CHATGPT_APIKEY

@@ -19,7 +19,7 @@
     "strictPropertyInitialization": false,
     "typeRoots": ["./node_modules/@types"],
     "baseUrl": ".",
-    "paths": { "/opt/client": ["layer/prisma/nodejs/client"] }
+    "paths": { "/opt/nodejs/client": ["layer/prisma/nodejs/client"] }
   },
   "exclude": ["node_modules", "cdk.out"]
 }
