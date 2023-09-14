@@ -3,6 +3,7 @@ import React, { FC, FormEvent, useState } from 'react'
 import { IngredientForm } from '@/components/IngredientForm'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { IngredientsAtom } from '@/atoms/Ingredients'
+import { LoadingAtom } from '@/atoms/Loading'
 
 interface Props {
   title: string
@@ -21,22 +22,31 @@ export const IngredientList: FC<Props> = ({ title, use }) => {
     setName('')
   }
 
+  const loading = useRecoilValue(LoadingAtom)
+
   return (
     <div>
-      <h3>{title}</h3>
-
       <form onSubmit={submitHandler} className='flex my-3'>
-        <input
-          type='text'
-          placeholder='食材を入力してください'
-          required
-          className='input input-bordered w-full max-w-xs'
-          value={name}
-          onChange={(e) => {
-            setName(e.target.value)
-          }}
-        />
-        <button className='btn'>追加</button>
+        <div>
+          <label htmlFor={`ingredient-${use ? 'use' : 'not-use'}`}>
+            {title}
+          </label>
+          <input
+            type='text'
+            id={`ingredient-${use ? 'use' : 'not-use'}`}
+            disabled={loading}
+            placeholder='食材を入力してください'
+            required
+            className='input input-bordered w-full max-w-xs'
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value)
+            }}
+          />
+        </div>
+        <button className='btn self-end' disabled={loading}>
+          追加
+        </button>
       </form>
 
       <ul

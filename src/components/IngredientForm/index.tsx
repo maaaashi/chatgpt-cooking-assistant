@@ -1,9 +1,10 @@
 import { IngredientsAtom } from '@/atoms/Ingredients'
+import { LoadingAtom } from '@/atoms/Loading'
 import { Ingredient } from '@/domains/ingredient'
-import React, { ChangeEvent, FC, FormEvent, useRef, useState } from 'react'
+import React, { FC, useRef, useState } from 'react'
 import { AiFillCloseSquare } from 'react-icons/ai'
 import { BiSolidMessageSquareEdit } from 'react-icons/bi'
-import { useSetRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 
 interface Props {
   ingredient: Ingredient
@@ -14,6 +15,7 @@ export const IngredientForm: FC<Props> = ({ ingredient }) => {
   const [edit, setEdit] = useState(false)
   const [name, setName] = useState(ingredient.name)
   const ref = useRef<HTMLInputElement>(null)
+  const loading = useRecoilValue(LoadingAtom)
 
   const deleteIngdient = () => {
     setIngredientList((c) => {
@@ -59,17 +61,27 @@ export const IngredientForm: FC<Props> = ({ ingredient }) => {
           ref={ref}
           className='w-full p-1 rounded border border-dashed border-black'
           defaultValue={name}
+          disabled={loading}
         />
       ) : (
         <span>{ingredient.name}</span>
       )}
       <div className='flex items-center gap-2'>
-        <button onClick={updateIngdient} className={edit ? 'text-primary' : ''}>
+        <button
+          onClick={updateIngdient}
+          className={
+            edit
+              ? 'text-primary hover:text-primary-focus disabled:text-primary'
+              : 'text-gray-500 hover:text-gray-400 disabled:text-gray-500'
+          }
+          disabled={loading}
+        >
           <BiSolidMessageSquareEdit size={20} />
         </button>
         <button
           onClick={deleteIngdient}
-          className='text-red-400 hover:text-red-600 w-fit'
+          disabled={loading}
+          className='text-red-400 hover:text-red-600 w-fit disabled:text-red-600'
         >
           <AiFillCloseSquare size={20} />
         </button>

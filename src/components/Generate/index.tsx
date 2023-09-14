@@ -8,6 +8,7 @@ import Swal from 'sweetalert2'
 import { SelectRecipeAtom } from '@/atoms/SelectRecipe'
 import { ModeAtom } from '@/atoms/Mode'
 import { Recipe } from '@/domains/recipe'
+import { LoadingAtom } from '@/atoms/Loading'
 
 export const Generate = () => {
   const ingredientList = useRecoilValue(IngredientsAtom)
@@ -15,7 +16,8 @@ export const Generate = () => {
   const [other, setOther] = useState('')
   const setRecipe = useSetRecoilState(SelectRecipeAtom)
   const setMode = useSetRecoilState(ModeAtom)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useRecoilState(LoadingAtom)
+  const setIngredientList = useSetRecoilState(IngredientsAtom)
 
   const wrapListTag = (text: string) => {
     return `<li>${text}</li>`
@@ -102,6 +104,7 @@ export const Generate = () => {
 
     const addRecipe = new Recipe(title, recipe, imageUrl, prompt)
 
+    setIngredientList([])
     setRecipe(addRecipe)
     setMode('view')
     setLoading(false)
@@ -126,6 +129,7 @@ export const Generate = () => {
             onChange={(e) => {
               setOther(e.target.value)
             }}
+            disabled={loading}
           ></textarea>
         </div>
       </div>
@@ -134,7 +138,13 @@ export const Generate = () => {
         onClick={generateRecipe}
         className='btn btn-primary w-full'
       >
-        レシピ生成！
+        {loading ? (
+          <>
+            考え中<span className='loading loading-dots loading-md'></span>
+          </>
+        ) : (
+          'レシピ生成'
+        )}
       </button>
     </div>
   )
