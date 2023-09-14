@@ -3,7 +3,7 @@ import { Configuration, OpenAIApi } from 'openai'
 import { generateAsync } from 'stability-client'
 import { put } from '@vercel/blob'
 import { v4 as uuidv4 } from 'uuid'
-import { PrismaClient } from '@prisma/client'
+import { putDB } from '/opt/client'
 
 const generateTitle = async (message: string) => {
   const apiKey = process.env.CHATGPT_APIKEY
@@ -106,23 +106,6 @@ const generateImage = async (prompt: string) => {
 
 type Input = {
   message: string
-}
-
-const putDB = async (
-  title: string,
-  recipe: string,
-  prompt: string,
-  imageUrl: string
-) => {
-  const prisma = new PrismaClient()
-  prisma.recipe.create({
-    data: {
-      title,
-      recipe,
-      prompt,
-      imageUrl,
-    },
-  })
 }
 
 export const handler: Handler = async (req) => {
