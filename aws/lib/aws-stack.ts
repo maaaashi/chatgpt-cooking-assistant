@@ -17,12 +17,7 @@ export class MaaaashiCookingAssistant extends Stack {
     const prismaLayer = new LayerVersion(this, 'PrismaLayer', {
       compatibleRuntimes: [Runtime.NODEJS_18_X],
       description: 'Prisma Layer',
-      code: Code.fromAsset(path.join(__dirname, '../layer/prisma'), {
-        bundling: {
-          image: Runtime.NODEJS_18_X.bundlingImage,
-          command: ['bash', '-c', 'npx prisma generate'],
-        },
-      }),
+      code: Code.fromAsset(path.join(__dirname, '../layer/prisma')),
       layerVersionName: 'prisma-layer',
     })
 
