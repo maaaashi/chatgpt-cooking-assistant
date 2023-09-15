@@ -1,5 +1,4 @@
 import { PrismaClient } from '@prisma/client'
-export const prisma = new PrismaClient()
 
 export const putDB = async (
   title: string,
@@ -16,4 +15,9 @@ export const putDB = async (
       imageUrl,
     },
   })
+}
+
+export const listDB = async () => {
+  const prisma = new PrismaClient()
+  return prisma.recipe.findMany()
 }

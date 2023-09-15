@@ -80,11 +80,34 @@ export class MaaaashiCookingAssistant extends Stack {
       },
     })
 
+    const listRecipesLambda = new Function(
+      this,
+      'CookingAssistantListRecipes',
+      {
+        functionName: 'CookingAssistantListRecipes',
+        runtime: Runtime.NODEJS_18_X,
+        code: Code.fromAsset(path.join(__dirname, '../lambda/list-recipes/')),
+        handler: 'index.handler',
+        timeout: Duration.minutes(15),
+      }
+    )
+
+    const listRecipesFunctionURL = listRecipesLambda.addFunctionUrl({
+      authType: FunctionUrlAuthType.NONE,
+      cors: {
+        allowedMethods: [HttpMethod.GET],
+        allowedOrigins: ['*'],
+      },
+    })
+
     new CfnOutput(this, 'GenerateRecipeURL', {
       value: generateRecipeFunctionURL.url,
     })
     new CfnOutput(this, 'GenerateImageURL', {
       value: generateImageFunctionURL.url,
+    })
+    new CfnOutput(this, 'ListRecipesURL', {
+      value: listRecipesFunctionURL.url,
     })
   }
 }
