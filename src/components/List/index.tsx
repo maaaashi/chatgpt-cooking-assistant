@@ -12,10 +12,10 @@ export const List = () => {
   const listRecipe = async () => {
     const url = process.env.NEXT_PUBLIC_LIST_RECIPES_URL!
     const response = await fetch(url)
-    const json = await response.json()
+    const { recipes } = await response.json()
 
     setRecipes(() => {
-      return json.map((d: any) => {
+      return recipes.map((d: any) => {
         return new Recipe(d.title, d.recipe, d.imageUrl, d.prompt)
       })
     })
