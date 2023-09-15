@@ -17,9 +17,9 @@ jobs:
         working-directory: aws
         run: npm ci
       - name: Copy prisma
-        run: cp -R ./prisma ./aws/layer/prisma/nodejs/
+        run: cp -R ./prisma ./aws/layer/prisma
       - name: Generate prisma client
-        working-directory: aws/layer/prisma/nodejs
+        working-directory: aws/layer/prisma
         run: npx prisma generate
         env:
           POSTGRES_DATABASE: ${{ secrets.POSTGRES_DATABASE }}
