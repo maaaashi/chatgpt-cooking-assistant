@@ -7,7 +7,7 @@ export const putDB = async (
   imageUrl: string
 ) => {
   const prisma = new PrismaClient()
-  prisma.recipe.create({
+  await prisma.recipe.create({
     data: {
       title,
       recipe,
@@ -19,5 +19,5 @@ export const putDB = async (
 
 export const listDB = async () => {
   const prisma = new PrismaClient()
-  return prisma.recipe.findMany()
+  return await prisma.recipe.findMany()
 }
