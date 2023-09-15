@@ -16,8 +16,6 @@ jobs:
       - name: Setup dependencies
         working-directory: aws
         run: npm ci
-      - name: Copy prisma
-        run: cp -R ./prisma ./aws/layer/prisma
       - name: Generate prisma client
         working-directory: aws/layer/prisma
         run: npx prisma generate
