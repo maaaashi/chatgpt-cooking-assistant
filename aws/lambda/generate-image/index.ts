@@ -3,6 +3,7 @@ import { Configuration, OpenAIApi } from 'openai'
 import { generateAsync } from 'stability-client'
 import { put } from '@vercel/blob'
 import { v4 as uuidv4 } from 'uuid'
+// @ts-ignore
 import { putDB } from '/opt/client'
 
 const generateTitle = async (message: string) => {

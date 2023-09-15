@@ -1,4 +1,5 @@
 import { Handler } from 'aws-lambda'
+// @ts-ignore
 import { listDB } from '/opt/client'
 
 export const handler: Handler = async (req) => {
