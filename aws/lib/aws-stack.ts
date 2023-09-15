@@ -102,7 +102,13 @@ export class MaaaashiCookingAssistant extends Stack {
       }
     )
 
-    const listRecipesFunctionURL = listRecipesLambda.addFunctionUrl()
+    const listRecipesFunctionURL = listRecipesLambda.addFunctionUrl({
+      authType: FunctionUrlAuthType.NONE,
+      cors: {
+        allowedMethods: [HttpMethod.GET],
+        allowedOrigins: ['*'],
+      },
+    })
 
     new CfnOutput(this, 'GenerateRecipeURL', {
       value: generateRecipeFunctionURL.url,
