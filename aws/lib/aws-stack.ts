@@ -89,6 +89,16 @@ export class MaaaashiCookingAssistant extends Stack {
         code: Code.fromAsset(path.join(__dirname, '../lambda/list-recipes/')),
         handler: 'index.handler',
         timeout: Duration.minutes(15),
+        environment: {
+          POSTGRES_DATABASE: process.env.POSTGRES_DATABASE!,
+          POSTGRES_HOST: process.env.POSTGRES_HOST!,
+          POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD!,
+          POSTGRES_PRISMA_URL: process.env.POSTGRES_PRISMA_URL!,
+          POSTGRES_URL: process.env.POSTGRES_URL!,
+          POSTGRES_URL_NON_POOLING: process.env.POSTGRES_URL_NON_POOLING!,
+          POSTGRES_USER: process.env.POSTGRES_USER!,
+        },
+        layers: [prismaLayer],
       }
     )
 
