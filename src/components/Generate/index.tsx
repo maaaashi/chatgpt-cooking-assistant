@@ -91,17 +91,6 @@ export const Generate = () => {
     })
 
     const { recipe, imageUrl, prompt, title } = await response.json()
-
-    await fetch('/api/putRecipe', {
-      method: 'POST',
-      body: JSON.stringify({
-        recipe,
-        imageUrl,
-        prompt: message,
-        title,
-      }),
-    })
-
     const addRecipe = new Recipe(title, recipe, imageUrl, prompt)
 
     setIngredientList([])
