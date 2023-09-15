@@ -9,12 +9,14 @@ export const View = () => {
   if (!recipe) return <></>
 
   return (
-    <div className='prose w-full max-w-full'>
-      <div className='float-right p-4 bg-base-300 w-fit h-fit'>
+    <div className='mx-auto container flex md:flex-row-reverse flex-col items-center md:block'>
+      <div className='md:float-right w-fit h-fit'>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={recipe.imageUrl} alt={recipe.title} width={300} />
       </div>
-      <ReactMarkdown>{recipe.recipe}</ReactMarkdown>
+      <div className='prose'>
+        <ReactMarkdown>{recipe.recipe}</ReactMarkdown>
+      </div>
     </div>
   )
 }
