@@ -9,7 +9,7 @@ const postGPT = async (message: string) => {
   const openai = new OpenAIApi(configuration)
   const model = 'gpt-4'
 
-  const systemContent = `ユーザーが料理のレシピを求めてきます。markdown形式で回答してください。`
+  const systemContent = `ユーザーが料理のレシピを求めてきます。markdown形式で回答してください。情報が足りない場合はERRORとだけ返してください。。`
 
   return await openai.createChatCompletion({
     model,
@@ -37,6 +37,15 @@ export const handler: Handler = async (req) => {
   try {
     const response = await postGPT(message)
     const recipe = response.data.choices[0].message?.content!
+
+    if (recipe === 'ERROR') {
+      return JSON.stringify({
+        recipe: 'ERROR',
+        imageUrl: 'ERROR',
+        prompt: 'ERROR',
+        title: 'ERROR',
+      })
+    }
 
     const res = await fetch(process.env.GENERATE_IMAGE_URL!, {
       method: 'POST',

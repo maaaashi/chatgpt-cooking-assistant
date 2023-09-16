@@ -91,6 +91,11 @@ export const Generate = () => {
     })
 
     const { recipe, imageUrl, prompt, title } = await response.json()
+
+    if (recipe === 'ERROR') {
+      alert('レシピの生成に失敗しました。')
+    }
+
     const addRecipe = new Recipe(title, recipe, imageUrl, prompt)
 
     setIngredientList([])

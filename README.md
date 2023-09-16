@@ -1,8 +1,8 @@
-# WIP: CHATGPT COOKING ASSISTANT
+# CHATGPT COOKING ASSISTANT
 
 <div><img src="./docs/main.png" /></div>
 
-- [WIP: CHATGPT COOKING ASSISTANT](#wip-chatgpt-cooking-assistant)
+- [CHATGPT COOKING ASSISTANT](#chatgpt-cooking-assistant)
 - [Installation](#installation)
 - [Usage](#usage)
 
