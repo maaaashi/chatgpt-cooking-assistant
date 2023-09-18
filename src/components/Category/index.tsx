@@ -9,10 +9,13 @@ export const Setting = () => {
   const loading = useRecoilValue(LoadingAtom)
 
   return (
-    <div>
-      <h3>カテゴリ</h3>
+    <div className='form-control my-3'>
+      <label htmlFor='category' className='label'>
+        <span className='label-text'>カテゴリ</span>
+      </label>
       <select
-        className='select select-bordered w-fit my-3'
+        id='category'
+        className='select select-bordered w-fit'
         disabled={loading}
         onChange={(e) => {
           const value = e.target.value as (typeof categories)[number]

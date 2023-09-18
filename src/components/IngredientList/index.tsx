@@ -4,6 +4,7 @@ import { IngredientForm } from '@/components/IngredientForm'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { IngredientsAtom } from '@/atoms/Ingredients'
 import { LoadingAtom } from '@/atoms/Loading'
+import { GrAddCircle } from 'react-icons/gr'
 
 interface Props {
   title: string
@@ -28,8 +29,11 @@ export const IngredientList: FC<Props> = ({ title, use }) => {
     <div>
       <form onSubmit={submitHandler} className='flex my-3'>
         <div>
-          <label htmlFor={`ingredient-${use ? 'use' : 'not-use'}`}>
-            {title}
+          <label
+            htmlFor={`ingredient-${use ? 'use' : 'not-use'}`}
+            className='label'
+          >
+            <span className='label-text'>{title}</span>
           </label>
           <input
             type='text'
@@ -44,8 +48,11 @@ export const IngredientList: FC<Props> = ({ title, use }) => {
             }}
           />
         </div>
-        <button className='btn self-end' disabled={loading}>
-          追加
+        <button
+          className='btn btn-circle btn-secondary font-bold self-end text-lg'
+          disabled={loading}
+        >
+          <GrAddCircle />
         </button>
       </form>
 
@@ -53,6 +60,11 @@ export const IngredientList: FC<Props> = ({ title, use }) => {
         className='space-y-1 text-gray-500 overflow-y-auto'
         style={{ height: 'calc(100vh - 400px)' }}
       >
+        <li className='w-full border-b-2 h-7'>
+          <div className='flex items-center justify-between w-2/3 mx-auto gap-3 text-gray-400'>
+            {'例) かぼちゃ'}
+          </div>
+        </li>
         {ingredientList
           .filter((i) => i.use === use)
           .map((ingredient, i) => (

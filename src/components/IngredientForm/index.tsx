@@ -55,36 +55,38 @@ export const IngredientForm: FC<Props> = ({ ingredient }) => {
   }
 
   return (
-    <li className='flex items-center justify-between w-2/3 mx-auto gap-3'>
-      {edit ? (
-        <input
-          ref={ref}
-          className='w-full p-1 rounded border border-dashed border-black'
-          defaultValue={name}
-          disabled={loading}
-        />
-      ) : (
-        <span>{ingredient.name}</span>
-      )}
-      <div className='flex items-center gap-2'>
-        <button
-          onClick={updateIngdient}
-          className={
-            edit
-              ? 'text-primary hover:text-primary-focus disabled:text-primary'
-              : 'text-gray-500 hover:text-gray-400 disabled:text-gray-500'
-          }
-          disabled={loading}
-        >
-          <BiSolidMessageSquareEdit size={20} />
-        </button>
-        <button
-          onClick={deleteIngdient}
-          disabled={loading}
-          className='text-red-400 hover:text-red-600 w-fit disabled:text-red-600'
-        >
-          <AiFillCloseSquare size={20} />
-        </button>
+    <li className='w-full border-b-2 h-7'>
+      <div className='flex items-center justify-between w-2/3 mx-auto gap-3'>
+        {edit ? (
+          <input
+            ref={ref}
+            className='w-full p-1 rounded border border-dashed border-black'
+            defaultValue={name}
+            disabled={loading}
+          />
+        ) : (
+          <span>{ingredient.name}</span>
+        )}
+        <div className='flex items-center gap-2'>
+          <button
+            onClick={updateIngdient}
+            className={
+              edit
+                ? 'text-primary hover:text-primary-focus disabled:text-primary'
+                : 'text-gray-500 hover:text-gray-400 disabled:text-gray-500'
+            }
+            disabled={loading}
+          >
+            <BiSolidMessageSquareEdit size={20} />
+          </button>
+          <button
+            onClick={deleteIngdient}
+            disabled={loading}
+            className='text-red-400 hover:text-red-600 w-fit disabled:text-red-600'
+          >
+            <AiFillCloseSquare size={20} />
+          </button>
+        </div>
       </div>
     </li>
   )

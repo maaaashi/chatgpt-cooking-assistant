@@ -105,7 +105,7 @@ export const Generate = () => {
   }
 
   return (
-    <div className='flex flex-col' style={{ height: 'calc(100vh - 140px)' }}>
+    <div className='flex flex-col h-full p-3'>
       <div className='flex flex-col flex-1'>
         <div className='flex gap-5 justify-center'>
           <Setting />
