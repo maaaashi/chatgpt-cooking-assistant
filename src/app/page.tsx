@@ -6,6 +6,8 @@ import { List } from '@/components/List'
 import { useRecoilValue } from 'recoil'
 import { ModeAtom } from '@/atoms/Mode'
 import { View } from '@/components/View'
+import { useEffect } from 'react'
+import { themeChange } from 'theme-change'
 
 export default function Home() {
   const mode = useRecoilValue(ModeAtom)
@@ -20,6 +22,10 @@ export default function Home() {
         return <View />
     }
   }
+
+  useEffect(() => {
+    themeChange(false)
+  }, [])
 
   return (
     <div className='h-screen flex flex-col'>

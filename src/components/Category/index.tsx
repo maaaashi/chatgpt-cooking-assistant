@@ -11,7 +11,7 @@ export const Setting = () => {
   return (
     <div className='form-control my-3'>
       <label htmlFor='category' className='label'>
-        <span className='label-text'>カテゴリ</span>
+        <span className='text-xs md:text-sm'>カテゴリ</span>
       </label>
       <select
         id='category'

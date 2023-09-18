@@ -33,7 +33,7 @@ export const IngredientList: FC<Props> = ({ title, use }) => {
             htmlFor={`ingredient-${use ? 'use' : 'not-use'}`}
             className='label'
           >
-            <span className='label-text'>{title}</span>
+            <span className='text-xs md:text-sm'>{title}</span>
           </label>
           <input
             type='text'
