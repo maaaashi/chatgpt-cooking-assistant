@@ -94,7 +94,7 @@ export const Generate = () => {
 
     if (recipe === 'ERROR') {
       alert('レシピの生成に失敗しました。')
-      setLoading(true)
+      setLoading(false)
       return
     }
 
