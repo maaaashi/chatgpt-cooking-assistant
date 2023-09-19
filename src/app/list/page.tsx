@@ -24,12 +24,19 @@ const Page = () => {
     listRecipe()
   }, [])
 
+  if (recipes.length === 0)
+    return (
+      <div className='h-screen flex items-center justify-center'>
+        <span className='loading loading-ball loading-lg'></span>
+      </div>
+    )
+
   return (
     <div className='flex flex-wrap p-5 gap-5 justify-center container mx-auto'>
       {recipes.map((r, i) => {
         return (
           <button
-            className='card bg-base-100 shadow-xl max-w-sm w-1/4 group hover:bg-base-300 hover:shadow-lg'
+            className='card bg-base-100 shadow-xl max-w-sm min-w-[155px] w-1/4 group hover:bg-base-300 hover:shadow-lg'
             key={i}
             onClick={() => router.push(`/recipe/${r.id}`)}
           >

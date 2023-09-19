@@ -4,10 +4,11 @@ import { LoadingAtom } from '@/atoms/Loading'
 import React from 'react'
 import { useRecoilValue } from 'recoil'
 import { HiOutlineDocumentAdd } from 'react-icons/hi'
-import { CiBoxList } from 'react-icons/ci'
+import { FaThList } from 'react-icons/fa'
 import { AiOutlineCheck } from 'react-icons/ai'
 import { BsPalette2 } from 'react-icons/bs'
 import { useRouter } from 'next/navigation'
+import HeaderButton from '../Button/HeaderButton'
 
 export const Header = () => {
   const loading = useRecoilValue(LoadingAtom)
@@ -81,48 +82,38 @@ export const Header = () => {
       <h1 className='font-bold text-lg'>
         {"Maaaashi's ChatGPT Cooking Assistant"}
       </h1>
-      <div className='hidden md:flex'>
-        <button
-          className={`btn ${btnActive('/')} flex-col`}
-          onClick={() => router.push('/')}
-          disabled={loading}
-        >
+      <div className='hidden md:flex md:gap-2'>
+        <HeaderButton clickFunc={() => router.push('/')}>
           <HiOutlineDocumentAdd size='15px' />
           GENERATE
-        </button>
-        <button
-          className={`btn ${btnActive('/list')} flex-col`}
-          onClick={() => router.push('/list')}
-          disabled={loading}
-        >
-          <CiBoxList size='15px' />
+        </HeaderButton>
+        <HeaderButton clickFunc={() => router.push('/list')}>
+          <FaThList size='15px' />
           LIST
-        </button>
+        </HeaderButton>
         <div className='dropdown-end dropdown'>
-          <label tabIndex={0} className='btn flex-col justify-around'>
+          <label
+            tabIndex={0}
+            className='btn btn-outline btn-info flex-col justify-around'
+          >
             <BsPalette2 size='15px' />
             THEME
           </label>
           {themeList()}
         </div>
       </div>
-      <div className='md:hidden flex'>
-        <button
-          className={`btn text-lg ${btnActive('/')}`}
-          onClick={() => router.push('/')}
-          disabled={loading}
-        >
-          <HiOutlineDocumentAdd />
-        </button>
-        <button
-          className={`btn text-lg ${btnActive('/list')}`}
-          onClick={() => router.push('/list')}
-          disabled={loading}
-        >
-          <CiBoxList />
-        </button>
+      <div className='md:hidden flex gap-2'>
+        <HeaderButton clickFunc={() => router.push('/')}>
+          <HiOutlineDocumentAdd size='15px' />
+        </HeaderButton>
+        <HeaderButton clickFunc={() => router.push('/list')}>
+          <FaThList size='15px' />
+        </HeaderButton>
         <div className='dropdown-end dropdown'>
-          <label tabIndex={0} className='btn flex-col justify-around'>
+          <label
+            tabIndex={0}
+            className='btn btn-outline btn-info flex-col justify-around'
+          >
             <BsPalette2 size='15px' />
           </label>
           {themeList()}
