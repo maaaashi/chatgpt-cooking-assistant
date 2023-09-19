@@ -10,7 +10,7 @@ export const handler: Handler = async (req) => {
   console.log(req)
   const { id } = req.queryStringParameters as Input
   try {
-    const recipe = await findRecipe(id)
+    const recipe = await findRecipe(+id)
     return JSON.stringify({
       recipe,
     })
