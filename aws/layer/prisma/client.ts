@@ -24,7 +24,7 @@ export const listRecipes = async () => {
 
 export const findRecipe = async (id: number) => {
   const prisma = new PrismaClient()
-  return await prisma.recipe.find({
+  return await prisma.recipe.findFirst({
     where: { id },
   })
 }
