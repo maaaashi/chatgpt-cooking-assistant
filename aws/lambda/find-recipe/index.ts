@@ -7,6 +7,7 @@ interface Input {
 }
 
 export const handler: Handler = async (req) => {
+  console.log(req)
   const { id } = JSON.parse(req.body) as Input
   try {
     const recipe = await findRecipe(id)
