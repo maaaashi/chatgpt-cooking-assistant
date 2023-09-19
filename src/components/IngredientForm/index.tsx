@@ -55,7 +55,7 @@ export const IngredientForm: FC<Props> = ({ ingredient }) => {
   }
 
   return (
-    <li className='w-full border-b-2 h-7'>
+    <li className='w-4/5 mx-auto border-b-2 h-7'>
       <div className='flex items-center justify-between w-2/3 mx-auto gap-3'>
         {edit ? (
           <input

@@ -1,23 +1,20 @@
-import { Setting } from '@/components/Category'
+import { Category } from '@/components/Category'
 import { IngredientList } from '@/components/IngredientList'
 import { useState } from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { IngredientsAtom } from '@/atoms/Ingredients'
 import { CategoryAtom } from '@/atoms/Category'
 import Swal from 'sweetalert2'
-import { SelectRecipeAtom } from '@/atoms/SelectRecipe'
-import { ModeAtom } from '@/atoms/Mode'
-import { Recipe } from '@/domains/recipe'
 import { LoadingAtom } from '@/atoms/Loading'
+import { useRouter } from 'next/navigation'
 
 export const Generate = () => {
   const ingredientList = useRecoilValue(IngredientsAtom)
   const category = useRecoilValue(CategoryAtom)
   const [other, setOther] = useState('')
-  const setRecipe = useSetRecoilState(SelectRecipeAtom)
-  const setMode = useSetRecoilState(ModeAtom)
   const [loading, setLoading] = useRecoilState(LoadingAtom)
   const setIngredientList = useSetRecoilState(IngredientsAtom)
+  const router = useRouter()
 
   const wrapListTag = (text: string) => {
     return `<li>${text}</li>`
@@ -58,7 +55,6 @@ export const Generate = () => {
 
     if (!confirm.isConfirmed) return
 
-    setRecipe(undefined)
     setLoading(true)
 
     const url = process.env.NEXT_PUBLIC_GENERATE_RECIPE_URL!
@@ -90,7 +86,7 @@ export const Generate = () => {
       }),
     })
 
-    const { recipe, imageUrl, prompt, title } = await response.json()
+    const { id, recipe } = await response.json()
 
     if (recipe === 'ERROR') {
       alert('レシピの生成に失敗しました。')
@@ -98,24 +94,21 @@ export const Generate = () => {
       return
     }
 
-    const addRecipe = new Recipe(title, recipe, imageUrl, prompt)
-
     setIngredientList([])
-    setRecipe(addRecipe)
-    setMode('view')
     setLoading(false)
+    router.push(`/recipe/${id}`)
   }
 
   return (
     <div className='flex flex-col h-full p-3'>
       <div className='flex flex-col flex-1'>
-        <div className='flex gap-5 justify-center'>
-          <Setting />
+        <div className='flex flex-col md:flex-row gap-5 justify-center'>
+          <Category />
           <IngredientList title='使いたい食材' use={true} />
           <IngredientList title='使いたくない食材' use={false} />
         </div>
 
-        <div className='flex flex-col w-4/5 mx-auto'>
+        <div className='flex flex-col container mx-auto mt-4'>
           <label htmlFor='other'>その他</label>
           <textarea
             id='other'

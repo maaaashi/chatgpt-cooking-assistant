@@ -3,7 +3,7 @@ import { LoadingAtom } from '@/atoms/Loading'
 import React from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 
-export const Setting = () => {
+export const Category = () => {
   const categories = ['なし', '和食', '洋食', '中華'] as const
   const [category, setCategory] = useRecoilState(CategoryAtom)
   const loading = useRecoilValue(LoadingAtom)
@@ -15,7 +15,7 @@ export const Setting = () => {
       </label>
       <select
         id='category'
-        className='select select-bordered w-fit'
+        className='select select-bordered w-full md:w-fit'
         disabled={loading}
         onChange={(e) => {
           const value = e.target.value as (typeof categories)[number]

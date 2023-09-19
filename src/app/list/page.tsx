@@ -1,13 +1,12 @@
-import { ModeAtom } from '@/atoms/Mode'
-import { SelectRecipeAtom } from '@/atoms/SelectRecipe'
-import { Recipe } from '@/domains/recipe'
-import React, { useEffect, useState } from 'react'
-import { useSetRecoilState } from 'recoil'
+'use client'
 
-export const List = () => {
+import { Recipe } from '@/domains/recipe'
+import { useRouter } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
+
+const Page = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([])
-  const setMode = useSetRecoilState(ModeAtom)
-  const setRecipe = useSetRecoilState(SelectRecipeAtom)
+  const router = useRouter()
 
   const listRecipe = async () => {
     const url = process.env.NEXT_PUBLIC_LIST_RECIPES_URL!
@@ -16,7 +15,7 @@ export const List = () => {
 
     setRecipes(() => {
       return recipes.map((d: any) => {
-        return new Recipe(d.title, d.recipe, d.imageUrl, d.prompt)
+        return new Recipe(d.id, d.title, d.recipe, d.imageUrl, d.prompt)
       })
     })
   }
@@ -25,11 +24,6 @@ export const List = () => {
     listRecipe()
   }, [])
 
-  const clickHandler = (recipe: Recipe) => {
-    setMode('view')
-    setRecipe(recipe)
-  }
-
   return (
     <div className='flex flex-wrap p-5 gap-5 justify-center container mx-auto'>
       {recipes.map((r, i) => {
@@ -37,9 +31,7 @@ export const List = () => {
           <button
             className='card bg-base-100 shadow-xl max-w-sm w-1/4 group hover:bg-base-300 hover:shadow-lg'
             key={i}
-            onClick={() => {
-              clickHandler(r)
-            }}
+            onClick={() => router.push(`/recipe/${r.id}`)}
           >
             <figure className='bg-base-300 relative'>
               <div className='absolute w-full h-full bg-transparent group-hover:bg-transparent-base'></div>
@@ -64,3 +56,5 @@ export const List = () => {
     </div>
   )
 }
+
+export default Page

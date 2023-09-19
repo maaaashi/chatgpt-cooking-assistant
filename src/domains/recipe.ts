@@ -1,10 +1,15 @@
 export class Recipe {
   constructor(
+    private _id: number,
     private _title: string,
     private _recipe: string,
     private _imageUrl: string,
     private _prompt: string
   ) {}
+
+  get id() {
+    return this._id
+  }
 
   get imageUrl() {
     return this._imageUrl

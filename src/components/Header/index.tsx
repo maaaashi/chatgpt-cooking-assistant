@@ -1,17 +1,17 @@
 'use client'
 
 import { LoadingAtom } from '@/atoms/Loading'
-import { ModeAtom } from '@/atoms/Mode'
 import React from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import { HiOutlineDocumentAdd } from 'react-icons/hi'
-import { IoDocumentsOutline } from 'react-icons/io5'
+import { CiBoxList } from 'react-icons/ci'
 import { AiOutlineCheck } from 'react-icons/ai'
 import { BsPalette2 } from 'react-icons/bs'
+import { useRouter } from 'next/navigation'
 
 export const Header = () => {
-  const [mode, setMode] = useRecoilState(ModeAtom)
   const loading = useRecoilValue(LoadingAtom)
+  const router = useRouter()
   const listTheme = [
     'light',
     'dark',
@@ -72,6 +72,10 @@ export const Header = () => {
     )
   }
 
+  const btnActive = (path: string) => {
+    return window.location.pathname === path ? 'btn-active' : ''
+  }
+
   return (
     <div className='bg-base-200 p-3 flex items-center justify-between'>
       <h1 className='font-bold text-lg'>
@@ -79,40 +83,43 @@ export const Header = () => {
       </h1>
       <div className='hidden md:flex'>
         <button
-          className={`btn ${mode === 'generate' ? 'btn-active' : ''}`}
-          onClick={() => setMode('generate')}
+          className={`btn ${btnActive('/')} flex-col`}
+          onClick={() => router.push('/')}
           disabled={loading}
         >
-          レシピ作成
+          <HiOutlineDocumentAdd size='15px' />
+          GENERATE
         </button>
         <button
-          className={`btn ${mode === 'list' ? 'btn-active' : ''}`}
-          onClick={() => setMode('list')}
+          className={`btn ${btnActive('/list')} flex-col`}
+          onClick={() => router.push('/list')}
           disabled={loading}
         >
-          一覧
+          <CiBoxList size='15px' />
+          LIST
         </button>
         <div className='dropdown-end dropdown'>
           <label tabIndex={0} className='btn flex-col justify-around'>
             <BsPalette2 size='15px' />
+            THEME
           </label>
           {themeList()}
         </div>
       </div>
       <div className='md:hidden flex'>
         <button
-          className={`btn text-lg ${mode === 'generate' ? 'btn-active' : ''}`}
-          onClick={() => setMode('generate')}
+          className={`btn text-lg ${btnActive('/')}`}
+          onClick={() => router.push('/')}
           disabled={loading}
         >
           <HiOutlineDocumentAdd />
         </button>
         <button
-          className={`btn text-lg ${mode === 'list' ? 'btn-active' : ''}`}
-          onClick={() => setMode('list')}
+          className={`btn text-lg ${btnActive('/list')}`}
+          onClick={() => router.push('/list')}
           disabled={loading}
         >
-          <IoDocumentsOutline />
+          <CiBoxList />
         </button>
         <div className='dropdown-end dropdown'>
           <label tabIndex={0} className='btn flex-col justify-around'>

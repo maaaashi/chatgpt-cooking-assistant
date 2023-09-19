@@ -28,7 +28,7 @@ export const IngredientList: FC<Props> = ({ title, use }) => {
   return (
     <div>
       <form onSubmit={submitHandler} className='flex my-3'>
-        <div>
+        <div className='flex-1'>
           <label
             htmlFor={`ingredient-${use ? 'use' : 'not-use'}`}
             className='label'
@@ -41,26 +41,20 @@ export const IngredientList: FC<Props> = ({ title, use }) => {
             disabled={loading}
             placeholder='食材を入力してください'
             required
-            className='input input-bordered w-full max-w-xs'
+            className='input input-bordered w-full'
             value={name}
             onChange={(e) => {
               setName(e.target.value)
             }}
           />
         </div>
-        <button
-          className='btn btn-circle btn-secondary font-bold self-end text-lg'
-          disabled={loading}
-        >
+        <button className='btn font-bold self-end text-lg' disabled={loading}>
           <GrAddCircle />
         </button>
       </form>
 
-      <ul
-        className='space-y-1 text-gray-500 overflow-y-auto'
-        style={{ height: 'calc(100vh - 400px)' }}
-      >
-        <li className='w-full border-b-2 h-7'>
+      <ul className='space-y-1 text-gray-500 overflow-y-auto'>
+        <li className='mx-auto w-4/5 border-b-2 h-7'>
           <div className='flex items-center justify-between w-2/3 mx-auto gap-3 text-gray-400'>
             {'例) かぼちゃ'}
           </div>
