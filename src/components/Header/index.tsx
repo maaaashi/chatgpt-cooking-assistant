@@ -48,7 +48,7 @@ export const Header = () => {
     return (
       <ul
         tabIndex={0}
-        className='dropdown-content menu rounded-box h-[70vh] max-h-96 w-fit flex-nowrap overflow-y-auto bg-base-300 p-2 shadow'
+        className='dropdown-content menu rounded-box h-[70vh] max-h-96 w-fit flex-nowrap overflow-y-auto bg-base-300 p-2 shadow z-50'
       >
         {listTheme.map((theme, index) => (
           <li key={index} data-theme={theme} className='my-1 bg-transparent'>
