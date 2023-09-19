@@ -1,17 +1,22 @@
 import { Handler } from 'aws-lambda'
 // @ts-ignore
-import { listRecipes } from '/opt/client'
+import { findRecipe } from '/opt/client'
+
+interface Input {
+  id: number
+}
 
 export const handler: Handler = async (req) => {
+  const { id } = JSON.parse(req.body) as Input
   try {
-    const recipes = await listRecipes()
+    const recipe = await findRecipe(id)
     return JSON.stringify({
-      recipes,
+      recipe,
     })
   } catch (e) {
     console.log(e)
     return JSON.stringify({
-      recipes: [],
+      recipe: null,
     })
   }
 }

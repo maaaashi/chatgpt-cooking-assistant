@@ -17,7 +17,14 @@ export const putDB = async (
   })
 }
 
-export const listDB = async () => {
+export const listRecipes = async () => {
   const prisma = new PrismaClient()
   return await prisma.recipe.findMany()
+}
+
+export const findRecipe = async (id: number) => {
+  const prisma = new PrismaClient()
+  return await prisma.recipe.find({
+    where: { id },
+  })
 }
