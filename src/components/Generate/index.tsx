@@ -94,6 +94,8 @@ export const Generate = () => {
 
     if (recipe === 'ERROR') {
       alert('レシピの生成に失敗しました。')
+      setLoading(true)
+      return
     }
 
     const addRecipe = new Recipe(title, recipe, imageUrl, prompt)
