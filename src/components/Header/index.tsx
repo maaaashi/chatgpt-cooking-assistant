@@ -11,7 +11,6 @@ import { useRouter } from 'next/navigation'
 import HeaderButton from '../Button/HeaderButton'
 
 export const Header = () => {
-  const loading = useRecoilValue(LoadingAtom)
   const router = useRouter()
   const listTheme = [
     'light',
@@ -73,15 +72,9 @@ export const Header = () => {
     )
   }
 
-  const btnActive = (path: string) => {
-    return window.location.pathname === path ? 'btn-active' : ''
-  }
-
   return (
     <div className='bg-base-200 p-3 flex items-center justify-between'>
-      <h1 className='font-bold text-lg'>
-        {"Maaaashi's ChatGPT Cooking Assistant"}
-      </h1>
+      <h1 className='font-bold text-lg'>{'ChatGPT Cooking Assistant'}</h1>
       <div className='hidden md:flex md:gap-2'>
         <HeaderButton clickFunc={() => router.push('/')}>
           <HiOutlineDocumentAdd size='15px' />
