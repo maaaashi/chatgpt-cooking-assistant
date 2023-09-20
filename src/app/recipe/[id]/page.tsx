@@ -1,9 +1,7 @@
 'use client'
 
 import React, { FC, useEffect, useState } from 'react'
-import { PrismaClient } from '@prisma/client'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
-import { Header } from '@/components/Header'
 
 interface Props {
   params: {
@@ -20,7 +18,6 @@ interface Recipe {
 }
 
 const Page: FC<Props> = ({ params }) => {
-  const prisma = new PrismaClient()
   const [recipe, setRecipe] = useState<Recipe | null>(null)
 
   const getData = async () => {
