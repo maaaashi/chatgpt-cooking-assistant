@@ -1,27 +1,31 @@
 'use client'
 
 import { Recipe } from '@/domains/recipe'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+
+const listRecipe = async () => {
+  const url = process.env.NEXT_PUBLIC_LIST_RECIPES_URL!
+  const response = await fetch(url)
+  const { recipes } = await response.json()
+
+  return recipes.map((d: any) => {
+    return new Recipe(d.id, d.title, d.recipe, d.imageUrl, d.prompt)
+  })
+}
 
 const Page = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const router = useRouter()
 
-  const listRecipe = async () => {
-    const url = process.env.NEXT_PUBLIC_LIST_RECIPES_URL!
-    const response = await fetch(url)
-    const { recipes } = await response.json()
-
-    setRecipes(() => {
-      return recipes.map((d: any) => {
-        return new Recipe(d.id, d.title, d.recipe, d.imageUrl, d.prompt)
-      })
-    })
+  const setRecipesFromDB = async () => {
+    const recipes = await listRecipe()
+    setRecipes(recipes)
   }
 
   useEffect(() => {
-    listRecipe()
+    setRecipesFromDB()
   }, [])
 
   if (recipes.length === 0)
@@ -42,8 +46,13 @@ const Page = () => {
           >
             <figure className='bg-base-300 relative'>
               <div className='absolute w-full h-full bg-transparent group-hover:bg-transparent-base'></div>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={r.imageUrl} alt={r.title} />
+              <Image
+                src={r.imageUrl}
+                alt={r.title}
+                style={{ position: 'inherit' }}
+                width={20000}
+                height={200}
+              />
             </figure>
             <div className='card-body'>
               <h2

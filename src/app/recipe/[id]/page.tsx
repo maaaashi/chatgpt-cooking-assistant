@@ -17,20 +17,25 @@ interface Recipe {
   title: string
 }
 
+const getData = async (id: string) => {
+  const url = new URL(process.env.NEXT_PUBLIC_FIND_RECIPE_URL!)
+  url.searchParams.append('id', id)
+
+  const response = await fetch(url)
+  const { recipe } = await response.json()
+  return recipe
+}
+
 const Page: FC<Props> = ({ params }) => {
   const [recipe, setRecipe] = useState<Recipe | null>(null)
 
-  const getData = async () => {
-    const url = new URL(process.env.NEXT_PUBLIC_FIND_RECIPE_URL!)
-    url.searchParams.append('id', params.id)
-
-    const response = await fetch(url)
-    const { recipe } = await response.json()
+  const setRecipeFromDB = async () => {
+    const recipe = await getData(params.id)
     setRecipe(recipe)
   }
 
   useEffect(() => {
-    getData()
+    setRecipeFromDB()
   }, [])
 
   if (!recipe)
