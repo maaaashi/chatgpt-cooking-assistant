@@ -1,6 +1,6 @@
 'use client'
 
-import React, { FC, useEffect, useState } from 'react'
+import React, { DialogHTMLAttributes, FC, useEffect, useState } from 'react'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
 
 interface Props {
@@ -38,6 +38,14 @@ const Page: FC<Props> = ({ params }) => {
     setRecipeFromDB()
   }, [])
 
+  useEffect(() => {
+    if (!recipe || !recipe.prompt) return
+
+    const modal = document.getElementById('my_modal_2')! as HTMLDialogElement
+
+    modal.showModal()
+  }, [recipe])
+
   if (!recipe)
     return (
       <div className='h-screen flex items-center justify-center'>
@@ -47,6 +55,17 @@ const Page: FC<Props> = ({ params }) => {
 
   return (
     <div>
+      <dialog id='my_modal_2' className='modal'>
+        <div className='modal-box'>
+          <h3 className='font-bold text-lg'>以下内容で生成されました。</h3>
+          <div className='prose'>
+            <ReactMarkdown>{recipe.prompt}</ReactMarkdown>
+          </div>
+        </div>
+        <form method='dialog' className='modal-backdrop'>
+          <button>close</button>
+        </form>
+      </dialog>
       <div className='mx-auto container flex md:flex-row-reverse flex-col items-center md:block'>
         <div className='md:float-right w-fit h-fit'>
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -54,6 +73,7 @@ const Page: FC<Props> = ({ params }) => {
         </div>
         <div className='prose'>
           <ReactMarkdown>{recipe.recipe}</ReactMarkdown>
+          {/* {recipe.recipe} */}
         </div>
       </div>
     </div>

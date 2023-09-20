@@ -59,25 +59,23 @@ export const Generate = () => {
 
     const url = process.env.NEXT_PUBLIC_GENERATE_RECIPE_URL!
 
-    const message = `
-    ### カテゴリ
-    ${category}
+    const message = `### カテゴリ
+${category}
 
-    ### 使いたい食材
-    ${useList.map(
-      (l) => `
-    - ${l.name}`
-    )}
+### 使いたい食材
+${useList.map(
+  (l) => `
+- ${l.name}`
+)}
 
-    ### 使いたくない食材
-    ${notUseList.map(
-      (l) => `
-    - ${l.name}`
-    )}
+### 使いたくない食材
+${notUseList.map(
+  (l) => `
+- ${l.name}`
+)}
 
-    ### その他
-    ${other}
-    `
+### その他
+${other}`
 
     const response = await fetch(url, {
       method: 'POST',

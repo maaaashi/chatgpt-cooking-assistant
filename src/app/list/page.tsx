@@ -17,11 +17,12 @@ const listRecipe = async (): Promise<Recipe[]> => {
 
 const Page = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([])
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
 
   const setRecipesFromDB = async () => {
+    setLoading(true)
     const recipes = await listRecipe()
-    console.log(recipes)
     setRecipes(
       recipes.sort((a, b) => {
         if (a.id < b.id) return -1
@@ -35,7 +36,7 @@ const Page = () => {
     setRecipesFromDB()
   }, [])
 
-  if (recipes.length === 0)
+  if (recipes.length === 0 || loading)
     return (
       <div className='h-screen flex items-center justify-center'>
         <span className='loading loading-ball loading-lg'></span>
