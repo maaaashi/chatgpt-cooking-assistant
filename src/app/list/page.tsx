@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
-const listRecipe = async () => {
+const listRecipe = async (): Promise<Recipe[]> => {
   const url = process.env.NEXT_PUBLIC_LIST_RECIPES_URL!
   const response = await fetch(url)
   const { recipes } = await response.json()
@@ -21,7 +21,14 @@ const Page = () => {
 
   const setRecipesFromDB = async () => {
     const recipes = await listRecipe()
-    setRecipes(recipes)
+    console.log(recipes)
+    setRecipes(
+      recipes.sort((a, b) => {
+        if (a.id < b.id) return -1
+
+        return 1
+      })
+    )
   }
 
   useEffect(() => {
