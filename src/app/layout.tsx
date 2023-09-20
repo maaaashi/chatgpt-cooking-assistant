@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang='en' data-theme='cupcake'>
+    <html lang='ja'>
       <body className={inter.className}>
         <RecoilRootComponent>
           <Header />

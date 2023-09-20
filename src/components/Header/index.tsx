@@ -12,6 +12,7 @@ import HeaderButton from '../Button/HeaderButton'
 
 export const Header = () => {
   const router = useRouter()
+  const loading = useRecoilValue(LoadingAtom)
   const listTheme = [
     'light',
     'dark',
@@ -74,12 +75,16 @@ export const Header = () => {
 
   return (
     <div className='bg-base-200 p-3 flex items-center justify-between'>
-      <h1 className='font-bold text-lg'>{'ChatGPT Cooking Assistant'}</h1>
+      <h1 className='font-bold text-lg'>
+        <button
+          className='btn btn-outline'
+          onClick={() => router.push('/')}
+          disabled={loading}
+        >
+          {'ChatGPT Cooking Assistant'}
+        </button>
+      </h1>
       <div className='hidden md:flex md:gap-2'>
-        <HeaderButton clickFunc={() => router.push('/')}>
-          <HiOutlineDocumentAdd size='15px' />
-          GENERATE
-        </HeaderButton>
         <HeaderButton clickFunc={() => router.push('/list')}>
           <FaThList size='15px' />
           LIST
@@ -96,9 +101,6 @@ export const Header = () => {
         </div>
       </div>
       <div className='md:hidden flex gap-2'>
-        <HeaderButton clickFunc={() => router.push('/')}>
-          <HiOutlineDocumentAdd size='15px' />
-        </HeaderButton>
         <HeaderButton clickFunc={() => router.push('/list')}>
           <FaThList size='15px' />
         </HeaderButton>
