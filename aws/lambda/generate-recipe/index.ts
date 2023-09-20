@@ -2,6 +2,7 @@ import { Handler } from 'aws-lambda'
 import { Configuration, OpenAIApi } from 'openai'
 import { put } from '@vercel/blob'
 import { v4 as uuidv4 } from 'uuid'
+import { generateAsync } from 'stability-client'
 // @ts-ignore
 import { putDB } from '/opt/client'
 
@@ -67,7 +68,7 @@ The prompt guide is as follows
 According to the guide, prompt engineering can significantly improve the quality and composition of the generated images.
 `
 
-  return await openai.createChatCompletion({
+  const response = await openai.createChatCompletion({
     model,
     temperature: 0.5,
     messages: [
@@ -81,6 +82,7 @@ According to the guide, prompt engineering can significantly improve the quality
       },
     ],
   })
+  return response.data.choices[0].message?.content!
 }
 
 const generateImage = async (recipe: string) => {
@@ -159,9 +161,10 @@ export const handler: Handler = async (req) => {
       generateImage(recipe),
     ])
 
-    await putDB(title, recipe, message, url)
+    const { id } = await putDB(title, recipe, message, url)
 
     return JSON.stringify({
+      id,
       recipe,
       imageUrl: url,
       prompt: message,

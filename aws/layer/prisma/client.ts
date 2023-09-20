@@ -7,7 +7,7 @@ export const putDB = async (
   imageUrl: string
 ) => {
   const prisma = new PrismaClient()
-  await prisma.recipe.create({
+  return await prisma.recipe.create({
     data: {
       title,
       recipe,
