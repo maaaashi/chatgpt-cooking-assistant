@@ -44,6 +44,7 @@ export class MaaaashiCookingAssistant extends Stack {
           POSTGRES_USER: process.env.POSTGRES_USER!,
         },
         timeout: Duration.minutes(15),
+        layers: [prismaLayer],
       }
     )
 
