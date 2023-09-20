@@ -125,7 +125,7 @@ export const Generate = () => {
       <button
         disabled={loading}
         onClick={generateRecipe}
-        className='btn btn-primary w-full'
+        className='btn btn-primary md:mx-1 mt-3'
       >
         {loading ? (
           <>
