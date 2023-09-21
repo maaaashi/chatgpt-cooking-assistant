@@ -7,6 +7,7 @@ import { CategoryAtom } from '@/atoms/Category'
 import Swal from 'sweetalert2'
 import { LoadingAtom } from '@/atoms/Loading'
 import { useRouter } from 'next/navigation'
+import { text } from 'stream/consumers'
 
 export const Generate = () => {
   const ingredientList = useRecoilValue(IngredientsAtom)
@@ -87,7 +88,11 @@ ${other}`
     const { id, recipe } = await response.json()
 
     if (recipe === 'ERROR') {
-      alert('レシピの生成に失敗しました。')
+      Swal.fire({
+        icon: 'error',
+        title: 'レシピが生成できませんでした。',
+        text: '情報を増やして再度お試しください',
+      })
       setLoading(false)
       return
     }
