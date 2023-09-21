@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import React, { DialogHTMLAttributes, FC, useEffect, useState } from 'react'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
 
@@ -68,8 +69,13 @@ const Page: FC<Props> = ({ params }) => {
       </dialog>
       <div className='mx-auto container flex md:flex-row-reverse flex-col items-center md:block bg-base-100 p-5'>
         <div className='md:float-right w-fit h-fit'>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={recipe.imageUrl} alt={recipe.title} width={300} />
+          <Image
+            src={recipe.imageUrl}
+            alt={recipe.title}
+            style={{ position: 'inherit' }}
+            width={300}
+            height={200}
+          />
         </div>
         <div className='prose'>
           <ReactMarkdown>{recipe.recipe}</ReactMarkdown>
