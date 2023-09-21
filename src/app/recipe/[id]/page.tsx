@@ -54,7 +54,7 @@ const Page: FC<Props> = ({ params }) => {
     )
 
   return (
-    <div>
+    <div className='bg-base-300'>
       <dialog id='my_modal_2' className='modal'>
         <div className='modal-box'>
           <h3 className='font-bold text-lg'>以下内容で生成されました。</h3>
@@ -66,7 +66,7 @@ const Page: FC<Props> = ({ params }) => {
           <button>close</button>
         </form>
       </dialog>
-      <div className='mx-auto container flex md:flex-row-reverse flex-col items-center md:block'>
+      <div className='mx-auto container flex md:flex-row-reverse flex-col items-center md:block bg-base-100 p-5'>
         <div className='md:float-right w-fit h-fit'>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={recipe.imageUrl} alt={recipe.title} width={300} />
