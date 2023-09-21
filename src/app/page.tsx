@@ -4,6 +4,7 @@ import { Recipe } from '@/domains/recipe'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import { themeChange } from 'theme-change'
 
 const listRecipe = async (): Promise<Recipe[]> => {
   const url = process.env.NEXT_PUBLIC_LIST_RECIPES_URL!
@@ -32,6 +33,7 @@ const Page = () => {
   }
 
   useEffect(() => {
+    themeChange(false)
     setRecipesFromDB()
   }, [])
 

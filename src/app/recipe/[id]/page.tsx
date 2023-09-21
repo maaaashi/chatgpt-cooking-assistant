@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import React, { DialogHTMLAttributes, FC, useEffect, useState } from 'react'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
+import { themeChange } from 'theme-change'
 
 interface Props {
   params: {
@@ -36,6 +37,7 @@ const Page: FC<Props> = ({ params }) => {
   }
 
   useEffect(() => {
+    themeChange(false)
     setRecipeFromDB()
   }, [])
 
