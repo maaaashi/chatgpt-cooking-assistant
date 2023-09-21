@@ -21,7 +21,6 @@ const Page = () => {
   const router = useRouter()
 
   const setRecipesFromDB = async () => {
-    setLoading(true)
     const recipes = await listRecipe()
     setRecipes(
       recipes.sort((a, b) => {
@@ -35,6 +34,11 @@ const Page = () => {
   useEffect(() => {
     setRecipesFromDB()
   }, [])
+
+  const movingRecipePage = (id: number) => {
+    setLoading(true)
+    router.push(`/recipe/${id}`)
+  }
 
   if (recipes.length === 0 || loading)
     return (
@@ -50,7 +54,7 @@ const Page = () => {
           <button
             className='card bg-base-100 shadow-xl max-w-sm min-w-[155px] w-1/4 group hover:bg-base-300 hover:shadow-lg'
             key={i}
-            onClick={() => router.push(`/recipe/${r.id}`)}
+            onClick={() => movingRecipePage(r.id)}
           >
             <figure className='bg-base-300 relative'>
               <div className='absolute w-full h-full bg-transparent group-hover:bg-transparent-base'></div>
