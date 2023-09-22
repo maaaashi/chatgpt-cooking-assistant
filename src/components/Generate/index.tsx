@@ -7,7 +7,6 @@ import { CategoryAtom } from '@/atoms/Category'
 import Swal from 'sweetalert2'
 import { LoadingAtom } from '@/atoms/Loading'
 import { useRouter } from 'next/navigation'
-import { text } from 'stream/consumers'
 
 export const Generate = () => {
   const ingredientList = useRecoilValue(IngredientsAtom)
