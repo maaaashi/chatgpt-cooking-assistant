@@ -117,11 +117,11 @@ const generateRecipe = async (message: string) => {
   const openai = new OpenAIApi(configuration)
   const model = 'gpt-4'
 
-  const systemContent = `ユーザーが料理のレシピを求めてきます。markdown形式で回答してください。情報が足りない場合はERRORとだけ返してください。。`
+  const systemContent = `ユーザーが料理のレシピを求めてきます。markdown形式で回答してください。情報が足りない場合はERRORとだけ返してください。`
 
   const response = await openai.createChatCompletion({
     model,
-    temperature: 0.5,
+    temperature: 1,
     messages: [
       {
         role: 'system',
