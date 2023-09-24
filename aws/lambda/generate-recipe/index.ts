@@ -109,7 +109,7 @@ const generateImage = async (recipe: string) => {
   }
 }
 
-const generateRecipe = async (message: string) => {
+const generateRecipe = async (message: string, temperature?: number) => {
   const apiKey = process.env.CHATGPT_APIKEY
   const configuration = new Configuration({
     apiKey,
@@ -121,7 +121,7 @@ const generateRecipe = async (message: string) => {
 
   const response = await openai.createChatCompletion({
     model,
-    temperature: 1,
+    temperature: temperature ?? 1,
     messages: [
       {
         role: 'system',
@@ -139,13 +139,14 @@ const generateRecipe = async (message: string) => {
 
 type Input = {
   message: string
+  temprature?: number
 }
 
 export const handler: Handler = async (req) => {
-  const { message } = JSON.parse(req.body) as Input
+  const { message, temprature } = JSON.parse(req.body) as Input
 
   try {
-    const recipe = await generateRecipe(message)
+    const recipe = await generateRecipe(message, temprature)
 
     if (recipe === 'ERROR') {
       return JSON.stringify({
