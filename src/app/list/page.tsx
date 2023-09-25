@@ -59,21 +59,20 @@ const Page = () => {
         {currentData.map((r, i) => {
           return (
             <button
-              className='card bg-base-100 shadow-xl max-w-sm min-w-[155px] w-full group hover:bg-base-300 hover:shadow-lg'
+              className='card card-side bg-base-100 shadow-xl min-w-[155px] w-full max-w-sm md:max-w-full group hover:bg-base-300 hover:shadow-lg'
               key={i}
               onClick={() => movingRecipePage(r.id)}
             >
-              <figure className='bg-base-300 relative'>
-                <div className='absolute w-full h-full bg-transparent group-hover:bg-transparent-base'></div>
+              <figure className='bg-base-300 w-2/5 md:w-1/5'>
                 <Image
                   src={r.imageUrl}
                   alt={r.title}
-                  style={{ position: 'inherit' }}
+                  className='h-full w-full'
                   width={20000}
-                  height={200}
+                  height={20000}
                 />
               </figure>
-              <div className='card-body'>
+              <div className='card-body w-3/5 md:w-4/5'>
                 <h2
                   className='card-title overflow-hidden'
                   style={{
@@ -84,6 +83,16 @@ const Page = () => {
                 >
                   {r.title}
                 </h2>
+                <p
+                  className='overflow-hidden'
+                  style={{
+                    display: '-webkit-box',
+                    WebkitBoxOrient: 'vertical',
+                    WebkitLineClamp: 2,
+                  }}
+                >
+                  {r.recipe}
+                </p>
               </div>
             </button>
           )
