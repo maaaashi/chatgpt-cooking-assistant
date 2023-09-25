@@ -39,7 +39,11 @@ export const UserInput = () => {
       setChats((c) => [...c, errorChat])
     } else {
       const imageChat = new Chat('Image', title, new Date(), imageUrl)
-      const recipeChat = new Chat('AI', recipe, new Date())
+      const recipeChat = new Chat(
+        'AI',
+        `${recipe}  また、これまで作成されたレシピは[こちら](/list)で確認できます。`,
+        new Date()
+      )
       setChats((c) => [...c, imageChat, recipeChat])
       setText('')
     }

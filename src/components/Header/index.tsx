@@ -4,7 +4,7 @@ import { LoadingAtom } from '@/atoms/Loading'
 import React from 'react'
 import { useRecoilValue } from 'recoil'
 import { AiOutlineCheck } from 'react-icons/ai'
-import { RiAiGenerate } from 'react-icons/ri'
+import { FaList } from 'react-icons/fa'
 import { BsPalette2 } from 'react-icons/bs'
 import { useRouter } from 'next/navigation'
 import HeaderButton from '../Button/HeaderButton'
@@ -84,9 +84,9 @@ export const Header = () => {
         </button>
       </h1>
       <div className='hidden md:flex md:gap-2'>
-        <HeaderButton clickFunc={() => router.push('/chat')}>
-          <RiAiGenerate size='15px' />
-          GENERATE
+        <HeaderButton clickFunc={() => router.push('/list')}>
+          <FaList size='15px' />
+          LIST
         </HeaderButton>
         <div className='dropdown-end dropdown'>
           <label
@@ -100,8 +100,8 @@ export const Header = () => {
         </div>
       </div>
       <div className='md:hidden flex gap-2'>
-        <HeaderButton clickFunc={() => router.push('/chat')}>
-          <RiAiGenerate size='15px' />
+        <HeaderButton clickFunc={() => router.push('/list')}>
+          <FaList size='15px' />
         </HeaderButton>
         <div className='dropdown-end dropdown'>
           <label

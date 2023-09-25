@@ -14,7 +14,7 @@ export const useShowData = (text: string, date?: Date) => {
       if (i === text.length) {
         clearInterval(interval)
       }
-    }, 100)
+    }, 50)
 
     setDateToShow(date?.toLocaleTimeString() ?? '')
 
