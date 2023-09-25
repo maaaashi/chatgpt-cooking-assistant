@@ -4,6 +4,7 @@ import { Chat } from '@/domains/chat'
 import React, { FormEvent, useEffect, useRef, useState } from 'react'
 import { AiOutlineSend } from 'react-icons/ai'
 import { useRecoilState, useSetRecoilState } from 'recoil'
+import Swal from 'sweetalert2'
 
 export const UserInput = () => {
   const setChats = useSetRecoilState(ChatAtom)
@@ -14,6 +15,15 @@ export const UserInput = () => {
 
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault()
+
+    const confirm = await Swal.fire({
+      title: '次の内容でよろしいですか',
+      text: text,
+      showCancelButton: true,
+    })
+
+    if (!confirm.isConfirmed) return
+
     setLoading(true)
 
     const addChat = new Chat('User', text, new Date())
