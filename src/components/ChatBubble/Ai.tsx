@@ -2,7 +2,8 @@
 
 import { useShowData } from '@/hooks/useShowData'
 import Image from 'next/image'
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC } from 'react'
+import ReactMarkdown from 'react-markdown'
 
 interface Props {
   text: string
@@ -20,7 +21,11 @@ export const AI: FC<Props> = ({ text, date }) => {
         </div>
       </div>
       <div className='chat-header'>AI Assistant</div>
-      <div className='chat-bubble'>{textToShow}</div>
+      <div className='chat-bubble'>
+        <article className='prose text-neutral-content'>
+          <ReactMarkdown>{textToShow}</ReactMarkdown>
+        </article>
+      </div>
       <time className='chat-footer text-xs opacity-50'>{dateToShow}</time>
     </div>
   )

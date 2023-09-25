@@ -1,14 +1,15 @@
 'use client'
 
+import { ChatAtom } from '@/atoms/Chat'
 import { AI } from '@/components/ChatBubble/Ai'
 import { User } from '@/components/ChatBubble/User'
+import { UserInput } from '@/components/UserInput'
 import { Chat } from '@/domains/chat'
-import React, { useState } from 'react'
+import React from 'react'
+import { useRecoilValue } from 'recoil'
 
 const Page = () => {
-  const initialChat = [new Chat('AI', 'こんにちは！', new Date())]
-
-  const [chats, setChats] = useState<Chat[]>(initialChat)
+  const chats = useRecoilValue(ChatAtom)
   const switchViewChat = ({ type, text, date }: Chat, index: number) => {
     switch (type) {
       case 'AI':
@@ -19,8 +20,11 @@ const Page = () => {
   }
 
   return (
-    <div className='container mx-auto'>
-      <div className='bg-base-300 p-5'>{chats.map(switchViewChat)}</div>
+    <div className='flex-1 flex flex-col'>
+      <div className='flex-1 container mx-auto bg-base-300 p-5'>
+        {chats.map(switchViewChat)}
+      </div>
+      <UserInput />
     </div>
   )
 }
