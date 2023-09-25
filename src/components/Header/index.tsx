@@ -91,7 +91,7 @@ export const Header = () => {
         <div className='dropdown-end dropdown'>
           <label
             tabIndex={0}
-            className='btn btn-outline btn-info flex-col justify-around'
+            className='btn btn-outline flex-col justify-around'
           >
             <BsPalette2 size='15px' />
             THEME
@@ -106,7 +106,7 @@ export const Header = () => {
         <div className='dropdown-end dropdown'>
           <label
             tabIndex={0}
-            className='btn btn-outline btn-info flex-col justify-around'
+            className='btn btn-outline flex-col justify-around'
           >
             <BsPalette2 size='15px' />
           </label>

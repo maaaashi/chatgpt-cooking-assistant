@@ -11,7 +11,7 @@ const HeaderButton: FC<Props> = ({ children, clickFunc }) => {
   const loading = useRecoilValue(LoadingAtom)
   return (
     <button
-      className='btn btn-outline btn-info flex-col'
+      className='btn btn-outline flex-col'
       onClick={clickFunc}
       disabled={loading}
     >
