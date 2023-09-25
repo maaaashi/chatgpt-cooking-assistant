@@ -14,7 +14,7 @@ export const User: FC<Props> = ({ text, date }) => {
   return (
     <div className='chat chat-end'>
       <div className='chat-header'>You</div>
-      <div className='chat-bubble'>{textToShow}</div>
+      <div className='chat-bubble'>{text}</div>
       <time className='chat-footer text-xs opacity-50'>{dateToShow}</time>
     </div>
   )
