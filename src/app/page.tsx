@@ -53,7 +53,7 @@ const Page = () => {
     )
 
   return (
-    <div className='flex flex-col items-center p-5 container mx-auto gap-5'>
+    <div className='flex flex-col items-center p-5 container mx-auto gap-5 overflow-y-auto'>
       <Pagination array={recipes} clickFunc={setPage} now={page} />
       <div className='flex flex-wrap gap-5 justify-center'>
         {currentData.map((r, i) => {

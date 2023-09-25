@@ -84,7 +84,7 @@ export const Header = () => {
         </button>
       </h1>
       <div className='hidden md:flex md:gap-2'>
-        <HeaderButton clickFunc={() => router.push('/generate')}>
+        <HeaderButton clickFunc={() => router.push('/chat')}>
           <RiAiGenerate size='15px' />
           GENERATE
         </HeaderButton>
@@ -100,7 +100,7 @@ export const Header = () => {
         </div>
       </div>
       <div className='md:hidden flex gap-2'>
-        <HeaderButton clickFunc={() => router.push('/generate')}>
+        <HeaderButton clickFunc={() => router.push('/chat')}>
           <RiAiGenerate size='15px' />
         </HeaderButton>
         <div className='dropdown-end dropdown'>

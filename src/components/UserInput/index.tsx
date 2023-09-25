@@ -1,17 +1,47 @@
 import { ChatAtom } from '@/atoms/Chat'
+import { LoadingAtom } from '@/atoms/Loading'
 import { Chat } from '@/domains/chat'
 import React, { FormEvent, useState } from 'react'
 import { AiOutlineSend } from 'react-icons/ai'
-import { useSetRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 
 export const UserInput = () => {
   const setChats = useSetRecoilState(ChatAtom)
   const [text, setText] = useState('')
-  const submitHandler = (e: FormEvent) => {
+  const [loading, setLoading] = useRecoilState(LoadingAtom)
+
+  const submitHandler = async (e: FormEvent) => {
     e.preventDefault()
+    setLoading(true)
+
     const addChat = new Chat('User', text, new Date())
-    setText('')
     setChats((c) => [...c, addChat])
+
+    const url = process.env.NEXT_PUBLIC_GENERATE_RECIPE_URL!
+
+    const response = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify({
+        message: text,
+      }),
+    })
+    const { recipe, title, imageUrl } = await response.json()
+
+    if (recipe === 'ERROR') {
+      const errorChat = new Chat(
+        'AI',
+        'レシピが生成できませんでした。情報を増やして再度お試しください',
+        new Date()
+      )
+      setChats((c) => [...c, errorChat])
+    } else {
+      const imageChat = new Chat('Image', title, new Date(), imageUrl)
+      const recipeChat = new Chat('AI', recipe, new Date())
+      setChats((c) => [...c, imageChat, recipeChat])
+    }
+
+    setLoading(false)
+    setText('')
   }
 
   return (
@@ -22,10 +52,12 @@ export const UserInput = () => {
         value={text}
         onChange={(e) => setText(e.target.value)}
         required
+        disabled={loading}
       ></textarea>
       <button
         type='submit'
         className='btn btn-primary btn-circle btn-outline absolute right-8 top-8'
+        disabled={loading}
       >
         <AiOutlineSend size='25' />
       </button>

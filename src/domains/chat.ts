@@ -1,8 +1,9 @@
 export class Chat {
   constructor(
-    private _type: 'AI' | 'User',
+    private _type: 'AI' | 'User' | 'Image',
     private _text: string,
-    private _date?: Date
+    private _date?: Date,
+    private _src?: string
   ) {}
 
   get type() {
@@ -15,5 +16,9 @@ export class Chat {
 
   get date() {
     return this._date
+  }
+
+  get src() {
+    return this._src
   }
 }
