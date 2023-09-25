@@ -32,7 +32,7 @@ const Page = () => {
 
   return (
     <div className='flex-1 flex flex-col overflow-y-auto'>
-      <div className='flex-1 container mx-auto bg-base-300 p-5'>
+      <div className='flex-1 container mx-auto bg-base-300 p-5 overflow-y-auto'>
         {chats.map(switchViewChat)}
         <div className='flex justify-center'>
           {loading ? (

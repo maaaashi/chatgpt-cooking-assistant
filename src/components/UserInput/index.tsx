@@ -30,18 +30,21 @@ export const UserInput = () => {
     if (recipe === 'ERROR') {
       const errorChat = new Chat(
         'AI',
-        'レシピが生成できませんでした。情報を増やして再度お試しください',
+        `レシピが生成できませんでした。  
+        情報を増やして再度お試しください。  
+        また、私は過去のメッセージをさかのぼることができませんので、その点ご注意ください。`,
         new Date()
       )
+
       setChats((c) => [...c, errorChat])
     } else {
       const imageChat = new Chat('Image', title, new Date(), imageUrl)
       const recipeChat = new Chat('AI', recipe, new Date())
       setChats((c) => [...c, imageChat, recipeChat])
+      setText('')
     }
 
     setLoading(false)
-    setText('')
   }
 
   return (
