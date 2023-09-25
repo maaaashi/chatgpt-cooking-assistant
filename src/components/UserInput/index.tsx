@@ -1,7 +1,7 @@
 import { ChatAtom } from '@/atoms/Chat'
 import { LoadingAtom } from '@/atoms/Loading'
 import { Chat } from '@/domains/chat'
-import React, { FormEvent, useState } from 'react'
+import React, { FormEvent, useEffect, useRef, useState } from 'react'
 import { AiOutlineSend } from 'react-icons/ai'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 
@@ -9,6 +9,8 @@ export const UserInput = () => {
   const setChats = useSetRecoilState(ChatAtom)
   const [text, setText] = useState('')
   const [loading, setLoading] = useRecoilState(LoadingAtom)
+  const formRef = useRef<HTMLFormElement>(null)
+  const textRef = useRef<HTMLTextAreaElement>(null)
 
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault()
@@ -51,23 +53,48 @@ export const UserInput = () => {
     setLoading(false)
   }
 
+  useEffect(() => {
+    if (!textRef.current) return
+
+    textRef.current.addEventListener('focus', () => {
+      if (!formRef.current) return
+
+      formRef.current.classList.add('border')
+      formRef.current.classList.add('border-black')
+    })
+
+    textRef.current.addEventListener('blur', () => {
+      if (!formRef.current) return
+
+      formRef.current.classList.remove('border')
+      formRef.current.classList.remove('border-black')
+    })
+  }, [])
+
   return (
-    <form onSubmit={submitHandler} className='bg-base-200 p-5 relative'>
-      <textarea
-        className='textarea textarea-bordered w-full resize-none'
-        placeholder='風邪の引き始めに効く食べ物を使った料理'
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        required
-        disabled={loading}
-      ></textarea>
-      <button
-        type='submit'
-        className='btn btn-primary btn-circle btn-outline absolute right-8 top-8'
-        disabled={loading}
+    <div className='bg-base-200 p-5'>
+      <form
+        onSubmit={submitHandler}
+        className='bg-base-100 flex gap-3 items-center rounded-md pr-3'
+        ref={formRef}
       >
-        <AiOutlineSend size='25' />
-      </button>
-    </form>
+        <textarea
+          className='textarea w-full resize-none focus:outline-none'
+          placeholder='風邪の引き始めに効く食べ物を使った料理'
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          required
+          disabled={loading}
+          ref={textRef}
+        ></textarea>
+        <button
+          type='submit'
+          className='btn btn-primary btn-circle btn-outline'
+          disabled={loading}
+        >
+          <AiOutlineSend size='25' />
+        </button>
+      </form>
+    </div>
   )
 }
