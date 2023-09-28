@@ -57,7 +57,7 @@ const Page: FC<Props> = ({ params }) => {
     )
 
   return (
-    <div className='bg-base-300'>
+    <div className='bg-base-300 overflow-y-auto'>
       <dialog id='my_modal_2' className='modal'>
         <div className='modal-box'>
           <h3 className='font-bold text-lg'>以下内容で生成されました。</h3>
