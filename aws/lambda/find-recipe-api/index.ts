@@ -1,19 +1,21 @@
 import { APIGatewayProxyHandler } from 'aws-lambda'
 // @ts-ignore
-import { listRecipes } from '/opt/client'
+import { findRecipe } from '/opt/client'
 
-export const handler: APIGatewayProxyHandler = async (req) => {
+export const handler: APIGatewayProxyHandler = async (event) => {
+  console.log(event)
   let body: string
 
   try {
-    const recipes = await listRecipes()
+    const id = event.queryStringParameters!.id!
+    const recipe = await findRecipe(+id)
     body = JSON.stringify({
-      recipes,
+      recipe,
     })
   } catch (e) {
     console.log(e)
     body = JSON.stringify({
-      recipes: [],
+      recipe: null,
     })
   }
 
