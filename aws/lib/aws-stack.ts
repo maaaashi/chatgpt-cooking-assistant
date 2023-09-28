@@ -1,4 +1,5 @@
 import { CfnOutput, Duration, Stack, StackProps } from 'aws-cdk-lib'
+import { Cors, LambdaIntegration, RestApi } from 'aws-cdk-lib/aws-apigateway'
 import {
   Code,
   Function,
@@ -120,6 +121,36 @@ export class MaaaashiCookingAssistant extends Stack {
     })
     new CfnOutput(this, 'FindRecipeURL', {
       value: findRecipeFunctionURL.url,
+    })
+
+    // API Gateway の定義
+    const api = new RestApi(this, 'MyApi', {
+      defaultCorsPreflightOptions: {
+        allowOrigins: Cors.ALL_ORIGINS,
+        allowMethods: Cors.ALL_METHODS,
+      },
+    })
+
+    const generateRecipeResource = api.root.addResource('generateRecipe')
+    generateRecipeResource.addMethod(
+      'POST',
+      new LambdaIntegration(generateRecipeLambda)
+    )
+
+    const findRecipeResource = api.root.addResource('findRecipe')
+    findRecipeResource.addMethod(
+      'POST',
+      new LambdaIntegration(findRecipeLambda)
+    )
+
+    const listRecipesResource = api.root.addResource('listRecipes')
+    listRecipesResource.addMethod(
+      'POST',
+      new LambdaIntegration(listRecipesLambda)
+    )
+
+    new CfnOutput(this, 'API Gateway URL', {
+      value: api.url,
     })
   }
 }

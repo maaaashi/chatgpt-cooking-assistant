@@ -28,7 +28,7 @@ jobs:
           POSTGRES_URL_NON_POOLING: ${{ secrets.POSTGRES_URL_NON_POOLING }}
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
       - name: Setup lambda & layer
-        run: bash ./lamba-dependency.sh
+        run: bash ./lambda-dependency.sh
       - name: CDK Deploy
         working-directory: aws
         run: npm run cdk deploy
