@@ -138,14 +138,11 @@ export class MaaaashiCookingAssistant extends Stack {
     )
 
     const findRecipeResource = api.root.addResource('findRecipe')
-    findRecipeResource.addMethod(
-      'POST',
-      new LambdaIntegration(findRecipeLambda)
-    )
+    findRecipeResource.addMethod('GET', new LambdaIntegration(findRecipeLambda))
 
     const listRecipesResource = api.root.addResource('listRecipes')
     listRecipesResource.addMethod(
-      'POST',
+      'GET',
       new LambdaIntegration(listRecipesLambda)
     )
 
