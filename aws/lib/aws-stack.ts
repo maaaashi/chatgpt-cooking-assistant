@@ -157,9 +157,9 @@ export class MaaaashiCookingAssistant extends Stack {
 
     const findRecipeApiLambda = new Function(
       this,
-      'CookingAssistantFindRecipe',
+      'CookingAssistantFindRecipeApi',
       {
-        functionName: 'CookingAssistantFindRecipe',
+        functionName: 'CookingAssistantFindRecipeApi',
         runtime: Runtime.NODEJS_18_X,
         code: Code.fromAsset(
           path.join(__dirname, '../lambda/find-recipe-api/')
@@ -181,9 +181,9 @@ export class MaaaashiCookingAssistant extends Stack {
 
     const generateRecipeApiLambda = new Function(
       this,
-      'CookingAssistantGenerateRecipe',
+      'CookingAssistantGenerateRecipeApi',
       {
-        functionName: 'CookingAssistantGenerateRecipe',
+        functionName: 'CookingAssistantGenerateRecipeApi',
         runtime: Runtime.NODEJS_18_X,
         code: Code.fromAsset(
           path.join(__dirname, '../lambda/generate-recipe-api/')
