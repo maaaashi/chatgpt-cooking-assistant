@@ -89,7 +89,7 @@ export const UserInput = () => {
         ref={formRef}
       >
         <textarea
-          className='textarea w-full resize-none focus:outline-none'
+          className='textarea w-full resize-none focus:outline-none disabled:bg-transparent disabled:border-none'
           placeholder='風邪の引き始めに効く食べ物を使った料理'
           value={text}
           onChange={(e) => setText(e.target.value)}
