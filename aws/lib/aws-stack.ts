@@ -155,14 +155,68 @@ export class MaaaashiCookingAssistant extends Stack {
       }
     )
 
+    const findRecipeApiLambda = new Function(
+      this,
+      'CookingAssistantFindRecipe',
+      {
+        functionName: 'CookingAssistantFindRecipe',
+        runtime: Runtime.NODEJS_18_X,
+        code: Code.fromAsset(
+          path.join(__dirname, '../lambda/find-recipe-api/')
+        ),
+        handler: 'index.handler',
+        timeout: Duration.minutes(15),
+        environment: {
+          POSTGRES_DATABASE: process.env.POSTGRES_DATABASE!,
+          POSTGRES_HOST: process.env.POSTGRES_HOST!,
+          POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD!,
+          POSTGRES_PRISMA_URL: process.env.POSTGRES_PRISMA_URL!,
+          POSTGRES_URL: process.env.POSTGRES_URL!,
+          POSTGRES_URL_NON_POOLING: process.env.POSTGRES_URL_NON_POOLING!,
+          POSTGRES_USER: process.env.POSTGRES_USER!,
+        },
+        layers: [prismaLayer],
+      }
+    )
+
+    const generateRecipeApiLambda = new Function(
+      this,
+      'CookingAssistantGenerateRecipe',
+      {
+        functionName: 'CookingAssistantGenerateRecipe',
+        runtime: Runtime.NODEJS_18_X,
+        code: Code.fromAsset(
+          path.join(__dirname, '../lambda/generate-recipe-api/')
+        ),
+        handler: 'index.handler',
+        environment: {
+          CHATGPT_APIKEY: process.env.CHATGPT_APIKEY!,
+          DREAM_STUDIO_APIKEY: process.env.DREAM_STUDIO_APIKEY!,
+          BLOB_READ_WRITE_TOKEN: process.env.BLOB_READ_WRITE_TOKEN!,
+          POSTGRES_DATABASE: process.env.POSTGRES_DATABASE!,
+          POSTGRES_HOST: process.env.POSTGRES_HOST!,
+          POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD!,
+          POSTGRES_PRISMA_URL: process.env.POSTGRES_PRISMA_URL!,
+          POSTGRES_URL: process.env.POSTGRES_URL!,
+          POSTGRES_URL_NON_POOLING: process.env.POSTGRES_URL_NON_POOLING!,
+          POSTGRES_USER: process.env.POSTGRES_USER!,
+        },
+        timeout: Duration.minutes(15),
+        layers: [prismaLayer],
+      }
+    )
+
     const generateRecipeResource = api.root.addResource('generateRecipe')
     generateRecipeResource.addMethod(
       'POST',
-      new LambdaIntegration(generateRecipeLambda)
+      new LambdaIntegration(generateRecipeApiLambda)
     )
 
     const findRecipeResource = api.root.addResource('findRecipe')
-    findRecipeResource.addMethod('GET', new LambdaIntegration(findRecipeLambda))
+    findRecipeResource.addMethod(
+      'GET',
+      new LambdaIntegration(findRecipeApiLambda)
+    )
 
     const listRecipesResource = api.root.addResource('listRecipes')
     listRecipesResource.addMethod(
