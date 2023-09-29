@@ -29,7 +29,7 @@ export const UserInput = () => {
     const addChat = new Chat('User', text, new Date())
     setChats((c) => [...c, addChat])
 
-    const url = process.env.NEXT_PUBLIC_GENERATE_RECIPE_URL!
+    const url = process.env.NEXT_PUBLIC_API_URL! + '/generateRecipe'
 
     const response = await fetch(url, {
       method: 'POST',

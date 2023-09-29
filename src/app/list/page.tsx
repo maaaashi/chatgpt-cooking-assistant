@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react'
 import { themeChange } from 'theme-change'
 
 const listRecipe = async (): Promise<Recipe[]> => {
-  const url = process.env.NEXT_PUBLIC_LIST_RECIPES_URL!
+  const url = process.env.NEXT_PUBLIC_API_URL! + '/listRecipes'
   const response = await fetch(url)
   const { recipes } = await response.json()
 

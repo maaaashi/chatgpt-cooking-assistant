@@ -56,9 +56,7 @@ export const Generate = () => {
     if (!confirm.isConfirmed) return
 
     setLoading(true)
-
-    const url = process.env.NEXT_PUBLIC_GENERATE_RECIPE_URL!
-
+    const url = process.env.NEXT_PUBLIC_API_URL! + '/generateRecipe'
     const message = `### カテゴリ
 ${category}
 

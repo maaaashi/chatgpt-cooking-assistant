@@ -20,7 +20,7 @@ interface Recipe {
 }
 
 const getData = async (id: string) => {
-  const url = new URL(process.env.NEXT_PUBLIC_FIND_RECIPE_URL!)
+  const url = new URL(process.env.NEXT_PUBLIC_API_URL! + '/findRecipe')
   url.searchParams.append('id', id)
 
   const response = await fetch(url)
