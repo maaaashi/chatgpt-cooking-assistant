@@ -163,7 +163,7 @@ export const handler: APIGatewayProxyHandler = async (req) => {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Headers': 'Content-Type',
-          'Access-Control-Allow-Methods': 'OPTIONS,GET',
+          'Access-Control-Allow-Methods': 'OPTIONS, POST',
         },
       }
     }
@@ -196,7 +196,7 @@ export const handler: APIGatewayProxyHandler = async (req) => {
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Headers': 'Content-Type',
-      'Access-Control-Allow-Methods': 'OPTIONS,GET',
+      'Access-Control-Allow-Methods': 'OPTIONS, POST',
     },
   }
 }
