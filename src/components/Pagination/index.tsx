@@ -19,7 +19,7 @@ export const Pagination: FC<Props> = ({ array, clickFunc, now }) => {
     return (
       <div className='join md:hidden'>
         {pagination.map((p, i) => {
-          if (p === 0) return <></>
+          if (p === 0) return <div key={i}></div>
 
           return (
             <button
