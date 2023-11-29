@@ -88,21 +88,32 @@ According to the guide, prompt engineering can significantly improve the quality
 const generateImage = async (recipe: string) => {
   const prompt = await generatePrompt(recipe)
   try {
-    // @ts-ignore
-    const { images } = await generateAsync({
+    // // @ts-ignore
+    // const { images } = await generateAsync({
+    //   prompt,
+    //   apiKey: process.env.DREAM_STUDIO_APIKEY!,
+    //   noStore: true,
+    //   steps: 50,
+    // })
+
+    // const arrayBuffer = images[0].buffer as ArrayBuffer
+
+    // const blob = await put(uuidv4(), arrayBuffer, {
+    //   access: 'public',
+    // })
+
+    // return blob.url
+
+    const apiKey = process.env.CHATGPT_APIKEY
+    const configuration = new Configuration({
+      apiKey,
+    })
+    const openai = new OpenAIApi(configuration)
+    const response = await openai.createImage({
       prompt,
-      apiKey: process.env.DREAM_STUDIO_APIKEY!,
-      noStore: true,
-      steps: 50,
+      n: 1,
     })
-
-    const arrayBuffer = images[0].buffer as ArrayBuffer
-
-    const blob = await put(uuidv4(), arrayBuffer, {
-      access: 'public',
-    })
-
-    return blob.url
+    return response.data.data[0].url
   } catch (error) {
     console.log(error)
     return 'error'
@@ -161,6 +172,15 @@ export const handler: Handler = async (req) => {
       generateTitle(recipe),
       generateImage(recipe),
     ])
+
+    if (!url) {
+      return JSON.stringify({
+        recipe: 'ERROR',
+        imageUrl: 'ERROR',
+        prompt: 'ERROR',
+        title: 'ERROR',
+      })
+    }
 
     const { id } = await putDB(title, recipe, message, url)
 
