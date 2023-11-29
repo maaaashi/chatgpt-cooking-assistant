@@ -112,6 +112,8 @@ const generateImage = async (recipe: string) => {
     const response = await openai.createImage({
       prompt,
       n: 1,
+      response_format: 'b64_json',
+      size: '512x512',
     })
     const base64 = response.data.data[0].b64_json
 
