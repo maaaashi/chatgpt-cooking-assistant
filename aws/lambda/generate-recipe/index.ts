@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { generateAsync } from 'stability-client'
 // @ts-ignore
 import { putDB } from '/opt/client'
+import axios from 'axios'
 
 const generateTitle = async (message: string): Promise<string> => {
   const apiKey = process.env.CHATGPT_APIKEY
@@ -112,12 +113,16 @@ const generateImage = async (recipe: string) => {
     const response = await openai.createImage({
       prompt,
       n: 1,
-      response_format: 'b64_json',
       size: '512x512',
     })
-    const base64 = response.data.data[0].b64_json
+    const imageUrl = response.data.data[0].url!
 
-    const blob = await put(uuidv4(), base64!, {
+    const res = await axios.get(imageUrl, {
+      responseType: 'arraybuffer',
+    })
+    const arrayBuffer = new Uint8Array(res.data).buffer
+
+    const blob = await put(uuidv4(), arrayBuffer, {
       access: 'public',
     })
     return blob.url
