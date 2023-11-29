@@ -113,7 +113,12 @@ const generateImage = async (recipe: string) => {
       prompt,
       n: 1,
     })
-    return response.data.data[0].url
+    const base64 = response.data.data[0].b64_json
+
+    const blob = await put(uuidv4(), base64!, {
+      access: 'public',
+    })
+    return blob.url
   } catch (error) {
     console.log(error)
     return 'error'
