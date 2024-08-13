@@ -1,7 +1,8 @@
 'use client'
 
+import { data } from '@/app/list/data'
 import Image from 'next/image'
-import React, { DialogHTMLAttributes, FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
 import { themeChange } from 'theme-change'
 
@@ -19,12 +20,10 @@ interface Recipe {
   title: string
 }
 
-const getData = async (id: string) => {
-  const url = new URL(process.env.NEXT_PUBLIC_API_URL! + '/findRecipe')
-  url.searchParams.append('id', id)
+const getData = async (id: string): Promise<Recipe> => {
+  const recipe = data.find((d) => d.id === +id)
+  if (!recipe) throw new Error('Recipe not found')
 
-  const response = await fetch(url)
-  const { recipe } = await response.json()
   return recipe
 }
 

@@ -94,13 +94,13 @@ export const UserInput = () => {
           value={text}
           onChange={(e) => setText(e.target.value)}
           required
-          disabled={loading}
+          disabled={true}
           ref={textRef}
         ></textarea>
         <button
           type='submit'
           className='btn btn-primary btn-circle btn-outline'
-          disabled={loading}
+          disabled={true}
         >
           <AiOutlineSend size='25' />
         </button>

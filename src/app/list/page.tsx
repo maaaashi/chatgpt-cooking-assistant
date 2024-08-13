@@ -45,6 +45,7 @@ const Page = () => {
   }
 
   const swithcLayout = ({ title, imageUrl, id, recipe }: Recipe, i: number) => {
+    const src = imageUrl === 'error' ? '/no-image.png' : imageUrl
     switch (mode) {
       case 'grid':
         return (
@@ -56,7 +57,7 @@ const Page = () => {
             >
               <div className='avatar w-24 rounded'>
                 <Image
-                  src={imageUrl}
+                  src={src}
                   alt={title}
                   className='h-full w-full'
                   width={20000}
@@ -78,7 +79,7 @@ const Page = () => {
           >
             <figure className='bg-base-300 w-2/5 md:w-1/5'>
               <Image
-                src={imageUrl}
+                src={src}
                 alt={title}
                 className='h-full w-full'
                 width={20000}
