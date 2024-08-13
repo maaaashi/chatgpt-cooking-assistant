@@ -7,13 +7,10 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { themeChange } from 'theme-change'
+import { data } from './data'
 
 const listRecipe = async (): Promise<Recipe[]> => {
-  const url = process.env.NEXT_PUBLIC_API_URL! + '/listRecipes'
-  const response = await fetch(url)
-  const { recipes } = await response.json()
-
-  return recipes.map((d: any) => {
+  return data.map((d: any) => {
     return new Recipe(d.id, d.title, d.recipe, d.imageUrl, d.prompt)
   })
 }
