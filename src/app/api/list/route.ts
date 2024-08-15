@@ -3,5 +3,7 @@ import { list } from '@vercel/blob'
 export async function GET(request: Request) {
   const l = await list()
 
-  return Response.json(l)
+  console.log(l.blobs)
+
+  return Response.json(l.blobs)
 }
