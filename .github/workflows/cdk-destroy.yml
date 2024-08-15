@@ -1,5 +1,5 @@
 name: cdk-github-actions-destroy
-on: [ workflow_dispatch ]
+on: [workflow_dispatch]
 jobs:
   build-test-deploy:
     runs-on: ubuntu-latest
@@ -14,9 +14,8 @@ jobs:
         run: npm ci
       - name: CDK Destroy
         working-directory: aws
-        run: npm run cdk destroy -f
+        run: npm run cdk destroy --force
         env:
           AWS_DEFAULT_REGION: 'ap-northeast-1'
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
