@@ -8,7 +8,6 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { themeChange } from 'theme-change'
 import { data } from './data'
-import { list } from '@vercel/blob'
 
 const listRecipe = async (): Promise<Recipe[]> => {
   return data.map((d: any) => {
@@ -17,9 +16,7 @@ const listRecipe = async (): Promise<Recipe[]> => {
 }
 
 const hoge = async () => {
-  const l = await list({
-    token: process.env.NEXT_PUBLIC_TOKEN,
-  })
+  const l = await fetch('/api/list')
   console.log(l)
 }
 
