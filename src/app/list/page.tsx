@@ -17,7 +17,9 @@ const listRecipe = async (): Promise<Recipe[]> => {
 }
 
 const hoge = async () => {
-  const l = await list()
+  const l = await list({
+    token: process.env.NEXT_PUBLIC_TOKEN,
+  })
   console.log(l)
 }
 
