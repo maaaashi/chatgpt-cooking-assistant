@@ -15,11 +15,6 @@ const listRecipe = async (): Promise<Recipe[]> => {
   })
 }
 
-const hoge = async () => {
-  const l = await fetch('/api/list')
-  console.log(l)
-}
-
 const Page = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const [loading, setLoading] = useState(false)
@@ -127,7 +122,6 @@ const Page = () => {
 
   return (
     <div className='flex flex-col items-center p-5 container mx-auto gap-5 overflow-y-auto'>
-      <button onClick={hoge}>ああああああああああ</button>
       <Layout mode={mode} setMode={setMode} />
       <Pagination array={recipes} clickFunc={setPage} now={page} />
       <div className='flex flex-wrap gap-5 justify-center'>
